@@ -8,8 +8,10 @@ import {
   ResetPassword,
   EmailVerification,
   ResetPasswordVerification,
+  Home,
 } from "./pages";
 import { RoutesConstant } from "./assets/constants";
+import { Layout } from "./components";
 
 const App = () => {
   return (
@@ -21,7 +23,15 @@ const App = () => {
             path={RoutesConstant.login}
             element={
               <>
-                <Login /> 
+                <Login />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.home}
+            element={
+              <>
+                <Layout component={<Home />} />
               </>
             }
           />
