@@ -9,6 +9,8 @@ import {
   EmailVerification,
   ResetPasswordVerification,
   Home,
+  Dashboard,
+  Subjects
 } from "./pages";
 import { RoutesConstant } from "./assets/constants";
 import { Layout } from "./components";
@@ -32,6 +34,22 @@ const App = () => {
             element={
               <>
                 <Layout component={<Home />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.dashboard}
+            element={
+              <>
+                <Layout component={<Dashboard />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.subjects}
+            element={
+              <>
+                <Layout component={<Subjects />} />
               </>
             }
           />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -28,11 +28,11 @@ import ClassIcon from "@mui/icons-material/Class";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 
 import "./layout.scss";
+import { RoutesConstant } from "../../assets/constants";
 
 const drawerWidth = 240;
 
 const Layout = (props) => {
-    console.log(props.component);
   const [open, setOpen] = useState(true);
   const [registration, setRegistration] = useState(false);
   const [payment, setPayment] = useState(false);
@@ -53,9 +53,6 @@ const Layout = (props) => {
     }
     setIsCollaps(styleName);
   };
-  const test = () => {
-    console.log(isCollaps);
-  };
 
   const registrationClick = () => {
     setRegistration(!registration);
@@ -64,6 +61,10 @@ const Layout = (props) => {
   const paynebtClick = () => {
     setPayment(!payment);
   };
+
+  const location = useLocation();
+  const pathnames = location.pathname.split("/").filter((item) => item);
+  const title = pathnames[0].toUpperCase()
 
   return (
     <div className="layout">
@@ -83,7 +84,7 @@ const Layout = (props) => {
               {open ? <ChevronLeftIcon /> : <MenuIcon />}
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Persistent drawer
+              {title}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -104,14 +105,18 @@ const Layout = (props) => {
           <div>LOGO</div>
           <Divider />
           <List className="layout-list">
-            <ListItem key={"Dashboard"} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <DashboardIcon onClick={test} />
-                </ListItemIcon>
-                <ListItemText primary={"Dashboard"} />
-              </ListItemButton>
-            </ListItem>
+            <Link className="layout-links" to={RoutesConstant.dashboard}>
+              <ListItem key={"Dashboard"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <DashboardIcon
+                    // onClick={<Link to={RoutesConstant.dashboard}></Link>}
+                    />
+                  </ListItemIcon>
+                  <ListItemText primary={"Dashboard"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
 
             <ListItemButton onClick={registrationClick}>
               <ListItemIcon>
@@ -147,14 +152,16 @@ const Layout = (props) => {
               </List>
             </Collapse>
 
-            <ListItem key={"Subjects"} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <MenuBookIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Subjects"} />
-              </ListItemButton>
-            </ListItem>
+            <Link className="layout-links" to={RoutesConstant.subjects}>
+              <ListItem key={"Subjects"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <MenuBookIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={"Subjects"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
 
             <ListItemButton onClick={paynebtClick}>
               <ListItemIcon>
@@ -218,9 +225,7 @@ const Layout = (props) => {
           </List>
           <Divider />
         </Drawer>
-        <div className={"main-render" + isCollaps}>
-          {props.component}
-        </div>
+        <div className={"main-render" + isCollaps}>{props.component}</div>
       </Box>
     </div>
   );
