@@ -17,7 +17,14 @@ const App = () => {
       <div className="app-wrapper">
         <Routes>
           <Route path="*" element={<Navigate to={RoutesConstant.login} />} />
-          <Route path={RoutesConstant.login} element={<Login />} />
+          <Route
+            path={RoutesConstant.login}
+            element={
+              <>
+                <Login /> 
+              </>
+            }
+          />
           <Route
             path={RoutesConstant.resetPassword}
             element={<ResetPassword />}
