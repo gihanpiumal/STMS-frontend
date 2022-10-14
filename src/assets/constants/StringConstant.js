@@ -1,1 +1,1 @@
-export default{}
+export default { TokenAccess: "STMS_token" };
