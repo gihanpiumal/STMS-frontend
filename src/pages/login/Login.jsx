@@ -89,7 +89,6 @@ const Login = () => {
     });
   };
 
-
   // submit the form
   const submit = async () => {
     if (validate()) {
@@ -101,12 +100,12 @@ const Login = () => {
       if (data) {
         clearState();
         removeAccessToken();
-        setAccessToken(data.token);  // set new accesstoken
+        setAccessToken(data.token); // set new accesstoken
         // navigate(RoutesConstant.home, {  // navigate to home page
         //   replace: true,
         // });
         console.log("done login");
-      }else{
+      } else {
         message.error("Wrong email or password", 3);
         return;
       }
@@ -119,8 +118,13 @@ const Login = () => {
 
   return (
     <div className="login">
-      <Box className="login-wrapper">
-        <Paper className="login-details">
+      <div className="loging-image">Login</div>
+      <div className="login-wrapper">
+        <div className="login-main-title">
+          Welcome to Student Management System
+        </div>
+        <div className="login-logo">LOGO</div>
+        <div className="login-details">
           <div className="loging-title">Login</div>
           <div className="login-inputs">
             <TextField
@@ -152,24 +156,21 @@ const Login = () => {
               }}
             />
           </div>
-          <div className="login-buttons">
-            <Link to={RoutesConstant.resetPassword}>forgot Password?</Link>
-            <div className="login-buttons-bottom">
-              <Button
-                variant="contained"
-                className="login-button"
-                onClick={submit}
-              >
-                Login
-              </Button>
-              <p className="login-shift-text">
-                Don't have an account?{" "}
-                <Link to={RoutesConstant.registration}>Signup now</Link>
-              </p>
-            </div>
+        </div>
+        <div className="login-buttons">
+          <div className="login-buttons-bottom">
+            <Button
+              variant="contained"
+              className="login-button"
+              onClick={submit}
+            >
+              Login
+            </Button>
           </div>
-        </Paper>
-      </Box>
+          <Link to={RoutesConstant.resetPassword}>forgot Password?</Link>
+          <p className="login-shift-text">Powered by @gihan</p>
+        </div>
+      </div>
     </div>
   );
 };

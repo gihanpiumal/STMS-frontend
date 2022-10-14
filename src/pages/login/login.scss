@@ -1,61 +1,84 @@
 .login {
-    padding-top: 15%;
+  // padding-top: 15%;
+  display: flex;
+  height: 100vh;
+  @media screen and (max-width: 400px) {
+    //   padding-top: 60%;
+  }
+
+  .loging-image {
+    flex: 3;
+  }
+  .login-wrapper {
+    background-color: #CDFCF6;
+    height: 100px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+    padding: 50px;
     @media screen and (max-width: 400px) {
-      padding-top: 60%;
+      width: 30%;
     }
-    .login-wrapper {
+
+    .login-main-title {
+      font-size: 22px;
+      font-weight: 500;
+      text-align: center;
+      padding-bottom: 60px;
+    }
+
+    .login-logo {
+        font-size: 32px;
+        font-weight: bold;
+    }
+
+    .login-details {
+      margin-top: 12.5px;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      margin-left: auto;
-      margin-right: auto;
-      height: auto;
-      @media screen and (max-width: 400px) {
-        width: 30%;
+    //   align-items: center;
+      .loging-title {
+        font-size: 24px;
+        font-weight: bold;
       }
-  
-      .login-details {
-        padding: 20px;
+      .login-inputs {
         display: flex;
         flex-direction: column;
         align-items: center;
-        .loging-title {
-          font-size: 24px;
-          font-weight: bold;
-        }
-        .login-inputs {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          .login-text-input {
-            width: 350px;
-            @media screen and (max-width: 400px) {
-              width: 250px;
-            }
-            @media screen and (max-width: 300px) {
-              width: 150px;
-            }
+        .login-text-input {
+          width: 350px;
+          @media screen and (max-width: 400px) {
+            width: 250px;
+          }
+          @media screen and (max-width: 300px) {
+            width: 150px;
           }
         }
-        .login-buttons {
-          margin-top: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          .login-buttons-bottom {
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .login-button {
-              width: 100px;
-            }
-            p {
-              margin-top: 10px;
-            }
-          }
+      }
+    }
+    .login-buttons {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .login-buttons-bottom {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .login-button {
+          width: 350px;
+          margin-bottom: 20px;
+        }
+        p {
+          margin-top: 10px;
         }
       }
     }
   }
-  
+}
