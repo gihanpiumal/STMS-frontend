@@ -130,7 +130,7 @@ const Layout = (props) => {
                   <ListItemIcon>
                     <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
-                  <ListItemText primary="Add Student" />
+                  <ListItemText primary="Student" />
                 </ListItemButton>
               </List>
               <List component="div" disablePadding>
@@ -138,7 +138,7 @@ const Layout = (props) => {
                   <ListItemIcon>
                     <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
-                  <ListItemText primary="Add Teacher" />
+                  <ListItemText primary="Teacher" />
                 </ListItemButton>
               </List>
               <List component="div" disablePadding>
@@ -146,7 +146,7 @@ const Layout = (props) => {
                   <ListItemIcon>
                     <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
-                  <ListItemText primary="Add Staff" />
+                  <ListItemText primary="Staff" />
                 </ListItemButton>
               </List>
             </Collapse>
