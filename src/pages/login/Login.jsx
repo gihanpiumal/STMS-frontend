@@ -104,10 +104,10 @@ const Login = () => {
         clearState();
         removeAccessToken();
         setAccessToken(data.token); // set new accesstoken
-        // navigate(RoutesConstant.home, {  // navigate to home page
-        //   replace: true,
-        // });
-        console.log("done login");
+        navigate(RoutesConstant.dashboard, {  // navigate to home page
+          replace: true,
+        });
+        // console.log("done login");
       } else {
         message.error("Wrong email or password", 3);
         return;
@@ -140,7 +140,11 @@ const Login = () => {
         <div className="login-main-title">
           Welcome to Student Management System
         </div>
-        <div className="login-logo">LOGO</div>
+        <div className="login-logo">
+        <img
+          src={require("../../images/logo.png")}
+          alt=""
+        /></div>
         <div className="login-details">
           <div className="loging-title">Login</div>
           <div className="login-inputs">

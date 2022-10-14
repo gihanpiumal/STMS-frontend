@@ -6,7 +6,6 @@ import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -26,11 +25,12 @@ import PaidIcon from "@mui/icons-material/Paid";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ClassIcon from "@mui/icons-material/Class";
 import ColorizeIcon from "@mui/icons-material/Colorize";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 import "./layout.scss";
 import { RoutesConstant } from "../../assets/constants";
 
-const drawerWidth = 240;
+const drawerWidth = 250;
 
 const Layout = (props) => {
   const [open, setOpen] = useState(true);
@@ -64,7 +64,7 @@ const Layout = (props) => {
 
   const location = useLocation();
   const pathnames = location.pathname.split("/").filter((item) => item);
-  const title = pathnames[0].toUpperCase()
+  const title = pathnames[0].toUpperCase();
 
   return (
     <div className="layout">
@@ -102,25 +102,24 @@ const Layout = (props) => {
           anchor="left"
           open={open}
         >
-          <div>LOGO</div>
-          <Divider />
+          <div className="layout-logo">
+            <img src={require("../../images/logo.png")} alt="LOGO" />
+          </div>
           <List className="layout-list">
             <Link className="layout-links" to={RoutesConstant.dashboard}>
               <ListItem key={"Dashboard"} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <DashboardIcon
-                    // onClick={<Link to={RoutesConstant.dashboard}></Link>}
-                    />
+                    <DashboardIcon style={{ color: "#2192FF" }} />
                   </ListItemIcon>
                   <ListItemText primary={"Dashboard"} />
                 </ListItemButton>
               </ListItem>
             </Link>
 
-            <ListItemButton onClick={registrationClick}>
+            <ListItemButton className="layout-links" onClick={registrationClick}>
               <ListItemIcon>
-                <AppRegistrationIcon />
+                <AppRegistrationIcon style={{ color: "#2192FF" }} />
               </ListItemIcon>
               <ListItemText primary="Registration" />
               {registration ? <ExpandLess /> : <ExpandMore />}
@@ -129,7 +128,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonAddAltIcon />
+                    <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Add Student" />
                 </ListItemButton>
@@ -137,7 +136,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonAddAltIcon />
+                    <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Add Teacher" />
                 </ListItemButton>
@@ -145,7 +144,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonAddAltIcon />
+                    <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Add Staff" />
                 </ListItemButton>
@@ -156,7 +155,7 @@ const Layout = (props) => {
               <ListItem key={"Subjects"} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
-                    <MenuBookIcon />
+                    <MenuBookIcon style={{ color: "#2192FF" }} />
                   </ListItemIcon>
                   <ListItemText primary={"Subjects"} />
                 </ListItemButton>
@@ -165,7 +164,7 @@ const Layout = (props) => {
 
             <ListItemButton onClick={paynebtClick}>
               <ListItemIcon>
-                <PaidIcon />
+                <PaidIcon style={{ color: "#2192FF" }} />
               </ListItemIcon>
               <ListItemText primary="Payment" />
               {payment ? <ExpandLess /> : <ExpandMore />}
@@ -174,7 +173,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonOutlineIcon />
+                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Student Payment" />
                 </ListItemButton>
@@ -182,7 +181,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonOutlineIcon />
+                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Teacher Payment" />
                 </ListItemButton>
@@ -190,7 +189,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonOutlineIcon />
+                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Staff Payment" />
                 </ListItemButton>
@@ -198,7 +197,7 @@ const Layout = (props) => {
               <List component="div" disablePadding>
                 <ListItemButton sx={{ pl: 4 }}>
                   <ListItemIcon>
-                    <PersonOutlineIcon />
+                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
                   </ListItemIcon>
                   <ListItemText primary="Other Payment" />
                 </ListItemButton>
@@ -208,7 +207,7 @@ const Layout = (props) => {
             <ListItem key={"Classes"} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <ClassIcon />
+                  <ClassIcon style={{ color: "#2192FF" }} />
                 </ListItemIcon>
                 <ListItemText primary={"Classes"} />
               </ListItemButton>
@@ -217,13 +216,26 @@ const Layout = (props) => {
             <ListItem key={"extra-class"} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
-                  <ColorizeIcon />
+                  <ColorizeIcon style={{ color: "#2192FF" }} />
                 </ListItemIcon>
                 <ListItemText primary={"Extra Classes"} />
               </ListItemButton>
             </ListItem>
           </List>
-          <Divider />
+          <div className="layout-logout">
+            <List>
+              <Link className="layout-links" to={RoutesConstant.login}>
+                <ListItem key={"Subjects"} disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <LogoutIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Logout"} />
+                  </ListItemButton>
+                </ListItem>
+              </Link>
+            </List>
+          </div>
         </Drawer>
         <div className={"main-render" + isCollaps}>{props.component}</div>
       </Box>

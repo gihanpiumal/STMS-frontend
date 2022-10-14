@@ -4,21 +4,36 @@
       // margin-left: 240px;
       padding-left: 240px;
     }
+    .layout-logo {
+      margin-right: auto;
+      margin-left: auto;
+      padding-top: 20px;
+    }
     .layout-list {
-      margin-top: 100px;
-      .layout-links{
-        color: black;
+      margin-top: 50px;
+      .layout-links {
+        color: rgb(80, 80, 80);
       }
     }
     .main-render {
       color: #fff;
       margin-top: 64px;
-      margin-left: 240px;
+      margin-left: 250px;
       width: auto;
     }
     .main-rendershow {
       color: #fff;
       padding-top: 64px;
+    }
+    .layout-logout {
+      display: flex;
+      justify-content: center;
+      font-size: 18px;
+      margin-top: 42px;
+      color: black;
+      .layout-links {
+        color: black;
+      }
     }
   }
 }

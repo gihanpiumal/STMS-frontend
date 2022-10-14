@@ -59,6 +59,7 @@
         flex-direction: column;
         align-items: center;
         .login-text-input {
+          background-color: #cdfcf6;
           width: 350px;
           @media screen and (max-width: 400px) {
             width: 250px;
