@@ -10,7 +10,16 @@ import {
   ResetPasswordVerification,
   Home,
   Dashboard,
-  Subjects
+  Subjects,
+  StaffRegistration,
+  StudentRegistration,
+  TeacherRegistration,
+  SttaffPayment,
+  TeacherPayement,
+  StudentPayment,
+  OtherPayment,
+  Classes,
+  ExtraClasses,
 } from "./pages";
 import { RoutesConstant } from "./assets/constants";
 import { Layout } from "./components";
@@ -50,6 +59,78 @@ const App = () => {
             element={
               <>
                 <Layout component={<Subjects />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.studentRegistration}
+            element={
+              <>
+                <Layout component={<StudentRegistration />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.teacherRegistration}
+            element={
+              <>
+                <Layout component={<TeacherRegistration />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.staffRegistration}
+            element={
+              <>
+                <Layout component={<StaffRegistration />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.studentPayment}
+            element={
+              <>
+                <Layout component={<StudentPayment />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.teacherPayment}
+            element={
+              <>
+                <Layout component={<TeacherPayement />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.staffPayment}
+            element={
+              <>
+                <Layout component={<SttaffPayment />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.otherPayment}
+            element={
+              <>
+                <Layout component={<OtherPayment />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.classes}
+            element={
+              <>
+                <Layout component={<Classes />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.extraClasses}
+            element={
+              <>
+                <Layout component={<ExtraClasses />} />
               </>
             }
           />

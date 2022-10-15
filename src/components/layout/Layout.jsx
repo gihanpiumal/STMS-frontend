@@ -117,7 +117,10 @@ const Layout = (props) => {
               </ListItem>
             </Link>
 
-            <ListItemButton className="layout-links" onClick={registrationClick}>
+            <ListItemButton
+              className="layout-links"
+              onClick={registrationClick}
+            >
               <ListItemIcon>
                 <AppRegistrationIcon style={{ color: "#2192FF" }} />
               </ListItemIcon>
@@ -125,30 +128,47 @@ const Layout = (props) => {
               {registration ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={registration} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Student" />
-                </ListItemButton>
-              </List>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Teacher" />
-                </ListItemButton>
-              </List>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Staff" />
-                </ListItemButton>
-              </List>
+              <Link
+                className="layout-links"
+                to={RoutesConstant.studentRegistration}
+              >
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Student" />
+                  </ListItemButton>
+                </List>
+              </Link>
+
+              <Link
+                className="layout-links"
+                to={RoutesConstant.teacherRegistration}
+              >
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Teacher" />
+                  </ListItemButton>
+                </List>
+              </Link>
+
+              <Link
+                className="layout-links"
+                to={RoutesConstant.staffRegistration}
+              >
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonAddAltIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Staff" />
+                  </ListItemButton>
+                </List>
+              </Link>
             </Collapse>
 
             <Link className="layout-links" to={RoutesConstant.subjects}>
@@ -170,57 +190,69 @@ const Layout = (props) => {
               {payment ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={payment} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Student Payment" />
-                </ListItemButton>
-              </List>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Teacher Payment" />
-                </ListItemButton>
-              </List>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Staff Payment" />
-                </ListItemButton>
-              </List>
-              <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemIcon>
-                    <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
-                  </ListItemIcon>
-                  <ListItemText primary="Other Payment" />
-                </ListItemButton>
-              </List>
+              <Link className="layout-links" to={RoutesConstant.studentPayment}>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Student Payment" />
+                  </ListItemButton>
+                </List>
+              </Link>
+              <Link className="layout-links" to={RoutesConstant.teacherPayment}>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Teacher Payment" />
+                  </ListItemButton>
+                </List>
+              </Link>
+              <Link className="layout-links" to={RoutesConstant.staffPayment}>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Staff Payment" />
+                  </ListItemButton>
+                </List>
+              </Link>
+              <Link className="layout-links" to={RoutesConstant.otherPayment}>
+                <List component="div" disablePadding>
+                  <ListItemButton sx={{ pl: 4 }}>
+                    <ListItemIcon>
+                      <PersonOutlineIcon style={{ color: "#7A0BC0" }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Other Payment" />
+                  </ListItemButton>
+                </List>
+              </Link>
             </Collapse>
 
-            <ListItem key={"Classes"} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ClassIcon style={{ color: "#2192FF" }} />
-                </ListItemIcon>
-                <ListItemText primary={"Classes"} />
-              </ListItemButton>
-            </ListItem>
+            <Link className="layout-links" to={RoutesConstant.classes}>
+              <ListItem key={"Classes"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ClassIcon style={{ color: "#2192FF" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={"Classes"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
 
-            <ListItem key={"extra-class"} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ColorizeIcon style={{ color: "#2192FF" }} />
-                </ListItemIcon>
-                <ListItemText primary={"Extra Classes"} />
-              </ListItemButton>
-            </ListItem>
+            <Link className="layout-links" to={RoutesConstant.extraClasses}>
+              <ListItem key={"extra-class"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ColorizeIcon style={{ color: "#2192FF" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={"Extra Classes"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           </List>
           <div className="layout-logout">
             <List>
