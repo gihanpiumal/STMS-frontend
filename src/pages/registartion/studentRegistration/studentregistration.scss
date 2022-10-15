@@ -102,23 +102,22 @@
           }
         }
       }
-      .student-reg-top-filterblock{
+      .student-reg-top-filterblock {
         display: none;
       }
     }
     .student-reg-middle {
-        margin-top: 30px;
-        padding: 10px;
-        border: 1px solid #fff;
+      margin-top: 30px;
+      padding: 10px;
+      border: 1px solid #fff;
+      width: 100%;
+      .student-tbl-title {
+        font-size: 28px;
+        font-weight: 600;
+      }
+      .student-registration-tbl {
         width: 100%;
-        .student-tbl-title{
-            font-size: 28px;
-            font-weight: 600;
-        }
-        .student-registration-tbl{
-            width: 100%;
-        }
-
+      }
     }
     .student-reg-bottom {
     }

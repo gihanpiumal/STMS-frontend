@@ -7,6 +7,7 @@ export default {
   dashboard: "/dashboard",
   subjects: "/subjects",
   studentRegistration: "/student-registration",
+  addStudent: "/student-registration/add-student",
   teacherRegistration: "/teacher-registration",
   staffRegistration: "/staff-registration",
   studentPayment: "/student-payment",
@@ -14,5 +15,5 @@ export default {
   staffPayment: "/staff-payment",
   otherPayment: "/other-payment",
   classes: "/classes",
-  extraClasses: "/extra-classes"
+  extraClasses: "/extra-classes",
 };

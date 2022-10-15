@@ -7,6 +7,7 @@ const subURL = "/student/";
 export const getStudents = (obj) => async (dispatch) => {
   try {
     const { data } = await httpCollection.postData(subURL + "get_all", obj);
+    console.log(data);
     dispatch({ type: actionTypes.get_all_students, payload: data.details });
   } catch (error) {
     console.log(error.message);
