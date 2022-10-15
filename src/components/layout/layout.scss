@@ -20,6 +20,9 @@
       margin-top: 64px;
       margin-left: 250px;
       width: auto;
+      @media screen and (max-width: 600px) {
+        margin-left: 0;
+      }
     }
     .main-rendershow {
       color: #fff;

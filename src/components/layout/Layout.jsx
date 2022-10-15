@@ -89,6 +89,7 @@ const Layout = (props) => {
           </Toolbar>
         </AppBar>
         <Drawer
+        className="drawer"
           width={drawerWidth}
           sx={{
             width: drawerWidth,
