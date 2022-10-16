@@ -8,6 +8,7 @@ export default {
   subjects: "/subjects",
   studentRegistration: "/student-registration",
   addStudent: "/student-registration/add-student",
+  addStudentSubject: "/add-student-subject",
   teacherRegistration: "/teacher-registration",
   staffRegistration: "/staff-registration",
   studentPayment: "/student-payment",

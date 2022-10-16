@@ -92,7 +92,7 @@ const StudentRegistration = () => {
     first_name: "",
     last_name: "",
     email: "",
-    subject_id: "",
+    student_id: "",
     access_status: "",
   };
 

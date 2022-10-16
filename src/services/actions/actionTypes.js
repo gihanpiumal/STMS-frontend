@@ -17,5 +17,11 @@ export default {
     update_category: "UPDATE_CATEGORY",
     delete_category: "DELETE_CATEGORY",
     
+    // student subjects action types
+    get_all_student_subjects: "FETCH_ALL_STUDENT_SUBJECTS",
+    add_student_subject: "ADD_STUDENT_SUBJECT",
+    update_student_subject: "UPDATE_STUDENT_SUBJECT",
+    delete_student_subject: "DELETE_STUDENT_SUBJECT",
+    
   };
   

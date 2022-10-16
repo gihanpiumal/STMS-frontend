@@ -50,11 +50,6 @@ const schema = Joi.object({
   avatar: Joi.string().empty("").label("Profile Picture"),
   password: Joi.string().empty("").label("Password"),
   subject_list: Joi.array()
-    // .items(
-    //   Joi.object().keys({
-    //     subject_id: Joi.string().required().label("Subject id"),
-    //   })
-    // )
     .empty("")
     .label("Subject id list"),
   category_id: Joi.string().required().label("Category"),
