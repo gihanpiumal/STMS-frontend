@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Joi from "joi";
+import Joi, { required } from "joi";
 
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { message } from "antd";
 
 import "./login.scss";
@@ -22,6 +24,7 @@ const Login = () => {
     password: "",
   });
   const [errors, setErrors] = useState([]);
+  const [password, setPassword] = useState("password");
   let navigate = useNavigate();
 
   const schema = Joi.object({
@@ -101,10 +104,10 @@ const Login = () => {
         clearState();
         removeAccessToken();
         setAccessToken(data.token); // set new accesstoken
-        // navigate(RoutesConstant.home, {  // navigate to home page
-        //   replace: true,
-        // });
-        console.log("done login");
+        navigate(RoutesConstant.dashboard, {  // navigate to home page
+          replace: true,
+        });
+        // console.log("done login");
       } else {
         message.error("Wrong email or password", 3);
         return;
@@ -116,14 +119,32 @@ const Login = () => {
     }
   };
 
+  // show to don't show the password
+  const changePassword = () => {
+    if (password === "password") {
+      setPassword("");
+    } else {
+      setPassword("password");
+    }
+  };
+
   return (
     <div className="login">
-      <div className="loging-image">Login</div>
+      <div className="loging-image">
+        <img
+          src={require("../../images/green-chameleon-s9CC2SKySJM-unsplash.jpg")}
+          alt=""
+        />
+      </div>
       <div className="login-wrapper">
         <div className="login-main-title">
           Welcome to Student Management System
         </div>
-        <div className="login-logo">LOGO</div>
+        <div className="login-logo">
+        <img
+          src={require("../../images/logo.png")}
+          alt=""
+        /></div>
         <div className="login-details">
           <div className="loging-title">Login</div>
           <div className="login-inputs">
@@ -141,20 +162,27 @@ const Login = () => {
               }}
             />
 
-            <TextField
-              id="password"
-              label="Password"
-              variant="standard"
-              type="password"
-              className="login-text-input"
-              value={form.password}
-              name={"password"}
-              error={errors.password ? true : false}
-              helperText={errors.password ? errors.password : ""}
-              onChange={(e) => {
-                validateProperty("password", e);
-              }}
-            />
+            <div className="password-claass">
+              <TextField
+                id="password"
+                label="Password"
+                variant="standard"
+                type={password}
+                className="registration-text-input-password-claass"
+                value={form.password}
+                name={"password"}
+                error={errors.password ? true : false}
+                helperText={errors.password ? errors.password : ""}
+                onChange={(e) => {
+                  validateProperty("password", e);
+                }}
+              />
+              {password ? (
+                <VisibilityIcon onClick={changePassword} />
+              ) : (
+                <VisibilityOffIcon onClick={changePassword} />
+              )}
+            </div>
           </div>
         </div>
         <div className="login-buttons">

@@ -1,0 +1,1 @@
+export {default as OtherPayment} from "./OtherPayment"

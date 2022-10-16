@@ -1,0 +1,70 @@
+.add-student-subject {
+  padding: 10px;
+  .add-student-subject-wrapper {
+    width: 100%;
+    .add-student-subject-top {
+      padding: 10px;
+      border: 1px solid #fff;
+      .add-student-subject-top-select-box {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        .title {
+          flex: 1;
+          font-size: 22px;
+          font-weight: 500;
+        }
+        .select-box {
+          width: 100%;
+          flex: 3;
+          .add-student-data-entity-select {
+            width: 100%;
+          }
+        }
+      }
+      .middle-middledata {
+        margin-top: 20px;
+        .admition-data {
+          display: flex;
+          width: 50%;
+          .admition-title {
+            font-size: 18px;
+            color: black;
+            flex: 1;
+          }
+          .admission-checkbox {
+            flex: 3;
+            .admission-checkbox-value {
+              font-size: 18px;
+            }
+            .error {
+              color: rgb(167, 21, 21);
+              font-size: 14px;
+            }
+          }
+        }
+        .add-student-buttons {
+          margin-top: 20px;
+          .save-btn {
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+    .add-student-subject-middle {
+      margin-top: 30px;
+      padding: 10px;
+      border: 1px solid #fff;
+      width: 100%;
+      .student-tbl-title {
+        font-size: 28px;
+        font-weight: 600;
+      }
+      .student-registration-tbl {
+        width: 100%;
+      }
+    }
+    .add-student-subject-bottum {
+    }
+  }
+}

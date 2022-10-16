@@ -8,9 +8,17 @@
 
   .loging-image {
     flex: 3;
+    @media screen and (max-width: 400px) {
+      //   padding-top: 60%;
+      display: none;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
   .login-wrapper {
-    background-color: #CDFCF6;
+    background-color: #cdfcf6;
     height: 100px;
     flex: 1;
     display: flex;
@@ -32,8 +40,8 @@
     }
 
     .login-logo {
-        font-size: 32px;
-        font-weight: bold;
+      font-size: 32px;
+      font-weight: bold;
     }
 
     .login-details {
@@ -41,7 +49,7 @@
       padding: 20px;
       display: flex;
       flex-direction: column;
-    //   align-items: center;
+      //   align-items: center;
       .loging-title {
         font-size: 24px;
         font-weight: bold;
@@ -51,12 +59,28 @@
         flex-direction: column;
         align-items: center;
         .login-text-input {
+          background-color: #cdfcf6;
           width: 350px;
           @media screen and (max-width: 400px) {
             width: 250px;
           }
           @media screen and (max-width: 300px) {
             width: 150px;
+          }
+        }
+
+        .password-claass {
+          display: flex;
+          align-items: center;
+        }
+
+        .registration-text-input-password-claass {
+          width: 325px;
+          @media screen and (max-width: 400px) {
+            width: 225px;
+          }
+          @media screen and (max-width: 300px) {
+            width: 125px;
           }
         }
       }

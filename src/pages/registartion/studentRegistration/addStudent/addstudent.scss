@@ -1,0 +1,94 @@
+.add-student {
+  padding: 10px;
+  .add-student-wrapper {
+    width: 100%;
+    .add-student-title {
+      font-size: 22px;
+      font-weight: 500;
+    }
+    .add-student-middle {
+      padding: 10px;
+      border: 1px solid #fff;
+      .add-student-data {
+        display: flex;
+        @media screen and (max-width: 600px) {
+          flex-direction: column;
+        }
+        .add-student-data-left {
+          flex: 1;
+          padding: 20px;
+          .add-student-data-entity {
+            display: flex;
+            // justify-content: center;
+            margin-bottom: 20px;
+
+            .add-student-data-entity-lable {
+              flex: 1;
+              font-size: 16px;
+              font-weight: 500;
+            }
+
+            .add-student-data-entity-lable-data {
+              flex: 4;
+              .add-student-data-entity-input {
+                flex: 4;
+                width: 100%;
+              }
+              .add-student-data-entity-select {
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                  width: 100%;
+                }
+              }
+              .input-error {
+                color: rgb(167, 21, 21);
+                font-size: 14px;
+              }
+            }
+          }
+        }
+        .add-student-data-right {
+          flex: 1;
+          padding: 20px;
+          .add-student-data-entity {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            .add-student-data-entity-lable {
+              flex: 1;
+              font-size: 16px;
+              font-weight: 500;
+            }
+            .add-student-data-entity-lable-data {
+              flex: 4;
+              .add-student-data-entity-input {
+                flex: 4;
+              }
+              .add-student-data-entity-select {
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                  width: 82%;
+                }
+              }
+              .input-error {
+                color: rgb(167, 21, 21);
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+      .add-student-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: end;
+        padding-right: 20px;
+        .save-btn {
+          margin-right: 20px;
+        }
+        .cancel-btn {
+        }
+      }
+    }
+  }
+}
