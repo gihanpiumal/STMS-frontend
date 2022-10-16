@@ -2,13 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Joi from "joi";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
-import { Input, Select, Space, Table, Modal, DatePicker } from "antd";
+import { Input, Select, DatePicker, message } from "antd";
 import Button from "@mui/material/Button";
 
 import "./addstudent.scss";
 
-import { getStudents } from "../../../../services/actions/studentAction";
+import {
+  getStudents,
+  addStudent,
+} from "../../../../services/actions/studentAction";
+import { getCategories } from "../../../../services/actions/categoriesAction";
+import { getSubjects } from "../../../../services/actions/subjectAction";
 import { RoutesConstant } from "../../../../assets/constants";
 
 const { Option } = Select;
@@ -42,15 +48,16 @@ const schema = Joi.object({
     )
     .label("Email"),
   avatar: Joi.string().empty("").label("Profile Picture"),
-  password: Joi.string().required().label("Password"),
+  password: Joi.string().empty("").label("Password"),
   subject_list: Joi.array()
-    .items(
-      Joi.object().keys({
-        subject_id: Joi.string().required().label("Subject id"),
-      })
-    )
-    .required()
+    // .items(
+    //   Joi.object().keys({
+    //     subject_id: Joi.string().required().label("Subject id"),
+    //   })
+    // )
+    .empty("")
     .label("Subject id list"),
+  category_id: Joi.string().required().label("Category"),
   registeredDate: Joi.date().raw().required().label("Registered Date"),
   access_level: Joi.string().required().label("Access Level"),
   access_status: Joi.string().required().label("Access Status"),
@@ -68,18 +75,63 @@ const AddStudent = () => {
     NIC: "",
     phone: "",
     password: "",
-    registeredDate: "",
+    registeredDate: moment().format("YYYY-MM-DD"),
     email: "",
     avatar: "",
     subject_list: [],
+    category_id: "",
     access_level: "001",
     access_status: "Pending",
     isVerified: false,
     OTPCode: 0,
   });
   const [errors, setErrors] = useState([]);
+  const [categoryId, setCattegoryId] = useState([]);
+  const [subjectIdDataList, setSubjectIdDataList] = useState([]);
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
+
+  let categoryObj = {
+    category_name: "",
+  };
+
+  let subjectObj = {
+    subject_name: "",
+    category_id: "",
+    teacher_id: "",
+    classDate: "",
+    isAdmition: null,
+    hall_id: "",
+  };
+
+  useEffect(() => {
+    dispatch(getCategories(categoryObj)); // load category data to redux store
+    dispatch(getSubjects(subjectObj)); // load subjects data to redux store
+  }, [dispatch]);
+
+  const categoryData = useSelector((state) => state.CATEGORIES); // get current category details from redux store
+  let subjectList = useSelector((state) => state.SUBJECTS); // get current subject details from redux store
+  let subjectDataObj = [];
+
+  const handleChangeCategory = (value) => {
+    setCattegoryId(value);
+    setForm({ ...form, ["category_id"]: value });
+    {
+      subjectList.map((val) => {
+        if (val.category_id === value) {
+          subjectDataObj.push(val);
+        }
+      });
+    }
+
+    {
+    }
+    setSubjectIdDataList(subjectDataObj);
+  };
+
+  const handleChangeSubject = (value) => {
+    setForm({ ...form, ["subject_list"]: value });
+  };
 
   // submit validation
   const validate = () => {
@@ -121,8 +173,21 @@ const AddStudent = () => {
     }
   };
 
+  const setDate = (date, dateString) => {
+    setForm({ ...form, ["DOB"]: dateString });
+  };
+
   const submit = async () => {
-    console.log(form);
+    if (validate()) {
+      return;
+    }
+
+    let data = await dispatch(addStudent(form)); // save new student data
+    if (data) {
+      message.success("Student added successfullly", 3);
+      goBack();
+    }
+    setErrors([]);
   };
 
   const goBack = () => {
@@ -141,132 +206,144 @@ const AddStudent = () => {
             <div className="add-student-data-left">
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Student ID</div>
-                <Input
-                  className="add-student-data-entity-input"
-                  id="student_id"
-                  value={form.student_id}
-                  onChange={(e) => {
-                    validateProperty("student_id", e);
-                  }}
-                />
-                <p className="input-error">
-                  {errors.student_id ? errors.student_id : ""}
-                </p>
+                <div className="add-student-data-entity-lable-data">
+                  <Input
+                    className="add-student-data-entity-input"
+                    id="student_id"
+                    value={form.student_id}
+                    onChange={(e) => {
+                      validateProperty("student_id", e);
+                    }}
+                  />
+                  <p className="input-error">
+                    {errors.student_id ? errors.student_id : ""}
+                  </p>
+                </div>
               </div>
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">First Name</div>
-                <Input
-                  className="add-student-data-entity-input"
-                  id="first_name"
-                  value={form.first_name}
-                  onChange={(e) => {
-                    validateProperty("first_name", e);
-                  }}
-                />
-                <p className="input-error">
-                  {errors.first_name ? errors.first_name : ""}
-                </p>
+                <div className="add-student-data-entity-lable-data">
+                  <Input
+                    className="add-student-data-entity-input"
+                    id="first_name"
+                    value={form.first_name}
+                    onChange={(e) => {
+                      validateProperty("first_name", e);
+                    }}
+                  />
+                  <p className="input-error">
+                    {errors.first_name ? errors.first_name : ""}
+                  </p>
+                </div>
               </div>
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Last Name</div>
-                <Input
-                  className="add-student-data-entity-input"
-                  id="last_name"
-                  value={form.last_name}
-                  onChange={(e) => {
-                    validateProperty("last_name", e);
-                  }}
-                />
-                <p className="input-error">
-                  {errors.last_name ? errors.last_name : ""}
-                </p>
+                <div className="add-student-data-entity-lable-data">
+                  <Input
+                    className="add-student-data-entity-input"
+                    id="last_name"
+                    value={form.last_name}
+                    onChange={(e) => {
+                      validateProperty("last_name", e);
+                    }}
+                  />
+                  <p className="input-error">
+                    {errors.last_name ? errors.last_name : ""}
+                  </p>
+                </div>
               </div>
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Birthday</div>
-                <DatePicker
-                  className="add-student-data-entity-input"
-                  id="DOB"
-                  onChange={(e) => {
-                    validateProperty("DOB", e);
-                  }}
-                />
-                <p className="input-error">{errors.DOB ? errors.DOB : ""}</p>
+                <div className="add-student-data-entity-lable-data">
+                  <DatePicker
+                    className="add-student-data-entity-input"
+                    id="DOB"
+                    onChange={setDate}
+                  />
+                  <p className="input-error">{errors.DOB ? errors.DOB : ""}</p>
+                </div>
               </div>
-              <div className="add-student-data-entity">
+              {/* <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Subjects</div>
                 <Select
-                  className="add-student-data-entity-input"
+                  className="add-student-data-entity-select"
                   mode="multiple"
-                  defaultValue="lucy"
-                  showArrow={true}
-                  //   onChange={handleChange}
+                  onChange={(value) => handleChangeSubject(value)}
                 >
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="disabled" disabled>
-                    Disabled
-                  </Option>
-                  <Option value="Yiminghe">yiminghe</Option>
+                  {subjectIdDataList.map((prop, index) => (
+                    <Select.Option key={index} value={prop.subject_id}>
+                      {prop.subject_name}
+                    </Select.Option>
+                  ))}
                 </Select>
                 <p className="input-error">{errors.NIC ? errors.NIC : ""}</p>
-              </div>
+              </div> */}
             </div>
             <div className="add-student-data-right">
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Phone No</div>
-                <Input
-                  className="add-student-data-entity-input"
-                  id="phone"
-                  value={form.phone}
-                  onChange={(e) => {
-                    validateProperty("phone", e);
-                  }}
-                />
-                <p className="input-error">
-                  {errors.phone ? errors.phone : ""}
-                </p>
+                <div className="add-student-data-entity-lable-data">
+                  <Input
+                    className="add-student-data-entity-input"
+                    id="phone"
+                    value={form.phone}
+                    onChange={(e) => {
+                      validateProperty("phone", e);
+                    }}
+                  />
+                  <p className="input-error">
+                    {errors.phone ? errors.phone : ""}
+                  </p>
+                </div>
               </div>
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Email</div>
-                <Input
-                  className="add-student-data-entity-input"
-                  id="email"
-                  value={form.email}
-                  onChange={(e) => {
-                    validateProperty("email", e);
-                  }}
-                />
-                <p className="input-error">
-                  {errors.email ? errors.email : ""}
-                </p>
+                <div className="add-student-data-entity-lable-data">
+                  <Input
+                    className="add-student-data-entity-input"
+                    id="email"
+                    value={form.email}
+                    onChange={(e) => {
+                      validateProperty("email", e);
+                    }}
+                  />
+                  <p className="input-error">
+                    {errors.email ? errors.email : ""}
+                  </p>
+                </div>
               </div>
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">NIC</div>
-                <Input
-                  className="add-student-data-entity-input"
-                  id="NIC"
-                  value={form.NIC}
-                  onChange={(e) => {
-                    validateProperty("NIC", e);
-                  }}
-                />
-                <p className="input-error">{errors.NIC ? errors.NIC : ""}</p>
+                <div className="add-student-data-entity-lable-data">
+                  <Input
+                    className="add-student-data-entity-input"
+                    id="NIC"
+                    value={form.NIC}
+                    onChange={(e) => {
+                      validateProperty("NIC", e);
+                    }}
+                  />
+                  <p className="input-error">{errors.NIC ? errors.NIC : ""}</p>
+                </div>
               </div>
               <div className="add-student-data-entity">
                 <div className="add-student-data-entity-lable">Study Level</div>
-                <Select
-                  className="add-student-data-entity-input"
-                  defaultValue="lucy"
-                  //   onChange={handleChange}
-                >
-                  <Option value="jack">Jack</Option>
-                  <Option value="lucy">Lucy</Option>
-                  <Option value="disabled" disabled>
-                    Disabled
-                  </Option>
-                  <Option value="Yiminghe">yiminghe</Option>
-                </Select>
-                <p className="input-error">{errors.NIC ? errors.NIC : ""}</p>
+                <div className="add-student-data-entity-lable-data">
+                  <Select
+                    className="add-student-data-entity-select"
+                    value={categoryId}
+                    onChange={(value) => handleChangeCategory(value)}
+                  >
+                    {categoryData.map((prop, index) => (
+                      <Select.Option key={index} value={prop._id}>
+                        {prop.category_name}
+                      </Select.Option>
+                    ))}
+                  </Select>
+                  <p className="input-error">
+                    {errors.category_id ? errors.category_id : ""}
+                  </p>
+                </div>
               </div>
             </div>
           </div>

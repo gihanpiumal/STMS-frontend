@@ -19,19 +19,31 @@
           padding: 20px;
           .add-student-data-entity {
             display: flex;
-            justify-content: center;
+            // justify-content: center;
             margin-bottom: 20px;
+
             .add-student-data-entity-lable {
               flex: 1;
               font-size: 16px;
               font-weight: 500;
             }
-            .add-student-data-entity-input {
-              flex: 3;
-            }
-            .input-error {
-              color: rgb(167, 21, 21);
-              font-size: 14px;
+
+            .add-student-data-entity-lable-data {
+              flex: 4;
+              .add-student-data-entity-input {
+                flex: 4;
+                width: 100%;
+              }
+              .add-student-data-entity-select {
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                  width: 100%;
+                }
+              }
+              .input-error {
+                color: rgb(167, 21, 21);
+                font-size: 14px;
+              }
             }
           }
         }
@@ -47,12 +59,21 @@
               font-size: 16px;
               font-weight: 500;
             }
-            .add-student-data-entity-input {
+            .add-student-data-entity-lable-data {
               flex: 4;
-            }
-            .input-error {
-              color: rgb(167, 21, 21);
-              font-size: 14px;
+              .add-student-data-entity-input {
+                flex: 4;
+              }
+              .add-student-data-entity-select {
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                  width: 82%;
+                }
+              }
+              .input-error {
+                color: rgb(167, 21, 21);
+                font-size: 14px;
+              }
             }
           }
         }

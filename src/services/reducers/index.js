@@ -1,9 +1,11 @@
 import { combineReducers } from "redux";
 
 import students from "./studentReducers";
-// import posts from "./postReducers";
+import subjects from "./subjectReducers";
+import categories from "./categoriesReducers";
 
 export default combineReducers({
   STUDENTS: students,
-//   POSTS: posts,
+  SUBJECTS: subjects,
+  CATEGORIES: categories,
 });

@@ -102,7 +102,6 @@ const StudentRegistration = () => {
 
   const dataUser = useSelector((state) => state.STUDENTS); // get current user details from redux store
 
-  console.log(dataUser);
   const handleFilter = () => {
     let styleName = "";
     switch (filter) {
