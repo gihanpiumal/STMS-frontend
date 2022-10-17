@@ -31,11 +31,10 @@
             }
           }
         }
-        .top-bar-line-right{
+        .top-bar-line-right {
           @media screen and (max-width: 600px) {
             display: none;
           }
-
         }
       }
       .middle-middledata {
@@ -50,7 +49,6 @@
             @media screen and (max-width: 600px) {
               margin-right: 20px;
             }
-  
           }
           .admission-checkbox {
             flex: 3;
@@ -82,6 +80,9 @@
       }
       .student-registration-tbl {
         width: 100%;
+        .action-icons {
+          cursor: pointer;
+        }
       }
     }
     .add-student-subject-bottum {

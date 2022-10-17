@@ -26,15 +26,15 @@ export const addStudentSubjects = (obj) => async (dispatch) => {
   }
 };
 
-// export const updateUser = (id, obj) => async (dispatch) => {
-//   try {
-//     const { data } = await httpCollection.putData(subURL + "update/" + id, obj);
-//     dispatch({ type: actionTypes.update_user, payload: data.details });
-//     return data;
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+export const updateStudentSubjects = (id, obj) => async (dispatch) => {
+  try {
+    const { data } = await httpCollection.putData(subURL + "update/" + id, obj);
+    dispatch({ type: actionTypes.update_student_subject, payload: data.details });
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 // export const deleteUser = (id) => async (dispatch) => {
 //   console.log("1st");

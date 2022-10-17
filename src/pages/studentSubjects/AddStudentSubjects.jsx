@@ -7,13 +7,14 @@ import moment from "moment";
 import {
   Input,
   Select,
-  DatePicker,
   message,
   Space,
   Table,
   Checkbox,
+  Modal,
+  Switch,
 } from "antd";
-import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EyeOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
@@ -23,10 +24,16 @@ import { getStudents, addStudent } from "../../services/actions/studentAction";
 import {
   getStudentSubjects,
   addStudentSubjects,
+  updateStudentSubjects,
 } from "../../services/actions/studentSubjectAction";
 import { getCategories } from "../../services/actions/categoriesAction";
 import { getSubjects } from "../../services/actions/subjectAction";
-import { RoutesConstant } from "../../assets/constants";
+import { RoutesConstant, StringConstant } from "../../assets/constants";
+
+const accessArray = [
+  StringConstant.studentAccess.Active,
+  StringConstant.studentAccess.Deactive,
+];
 
 const AddStudentSubjects = () => {
   const location = useLocation();
@@ -40,14 +47,20 @@ const AddStudentSubjects = () => {
     enrollDate: moment().format("YYYY-MM-DD"),
     tempStopDate: "",
     admition: false,
-    studentAccess: "Active",
+    studentAccess: StringConstant.studentAccess.Active,
+    reasonForStop: "",
+  });
+  const [editForm, setEditForm] = useState({
+    tempStopDate: moment().format("YYYY-MM-DD"),
+    studentAccess: "",
     reasonForStop: "",
   });
   const [isAdmitionWant, setIsAdmitionWant] = useState(false);
   const [admitionValuue, setAdmitionValue] = useState("");
   const [displayButtons, setDisplayButtons] = useState(false);
   const [checkBoxEror, setCheckBoxError] = useState(false);
-  const [checkBoxValue, setChckBoxValue] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [documentId, setDocumentId] = useState("");
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -95,6 +108,35 @@ const AddStudentSubjects = () => {
   const setAdmission = (e) => {
     setForm({ ...form, ["admition"]: e.target.checked });
     setCheckBoxError(false);
+  };
+
+  // modal controllers
+  const showEditModal = (record) => {
+    setEditForm({ ...editForm, ["studentAccess"]: record.studentAccess });
+    setDocumentId(record._id);
+    setIsEditModalOpen(true);
+  };
+
+  const handleChangAccess = (value) => {
+    setEditForm({ ...editForm, ["studentAccess"]: value });
+  };
+
+  const handleCancelEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleEdit = async () => {
+    let data = await dispatch(updateStudentSubjects(documentId, editForm)); // save new student-subject data
+    if (data) {
+      handleCancelEditModal()
+      message.success({
+        content: "Subject Edited Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    handleCancelEditModal()
   };
 
   const submit = async () => {
@@ -154,11 +196,16 @@ const AddStudentSubjects = () => {
       <Space size="middle">
         <EyeOutlined
           className="action-icons"
+
           // onClick={() => this.showEditModal(record)}
+        />
+        <EditOutlined
+          className="action-icons"
+          onClick={() => showEditModal(record)}
         />
 
         <DeleteOutlined
-          className="action-icons delete-icon"
+          className="action-icons"
           // onClick={() => this.showDeleteModal(record)}
         />
       </Space>
@@ -201,21 +248,24 @@ const AddStudentSubjects = () => {
       },
     },
     {
-      title: "Student Access",
-      dataIndex: "studentAccess",
-      key: "studentAccess",
-    },
-    {
       title: "Tempory Stop Date",
       dataIndex: "tempStopDate",
       key: "tempStopDate",
       responsive: ["sm"],
+      render: (date, record) => {
+        return moment(date).format("YYYY-MM-DD");
+      },
     },
+    // {
+    //   title: "Reason For Stop",
+    //   dataIndex: "reasonForStop",
+    //   key: "reasonForStop",
+    //   responsive: ["sm"],
+    // },
     {
-      title: "Reason For Stop",
-      dataIndex: "reasonForStop",
-      key: "reasonForStop",
-      responsive: ["sm"],
+      title: "Student Status",
+      dataIndex: "studentAccess",
+      key: "studentAccess",
     },
     {
       title: "Action",
@@ -228,6 +278,56 @@ const AddStudentSubjects = () => {
   return (
     <div className="add-student-subject">
       <div className="add-student-subject-wrapper">
+        <Modal
+          className="change-access-modal"
+          title="Change Student Access"
+          open={isEditModalOpen}
+          onCancel={handleCancelEditModal}
+          footer={null}
+        >
+          <div
+            style={{ display: "flex", alignItems: "center" }}
+            className="change-access"
+          >
+            <p style={{ flex: 1 }}>Change Student Access</p>
+            <Select
+              value={editForm.studentAccess}
+              className="change-access-select"
+              style={{ flex: 2 }}
+              onChange={(value) => handleChangAccess(value)}
+            >
+              {accessArray.map((prop, index) => (
+                <Select.Option key={index} value={prop}>
+                  {prop}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            className="add-student-buttons"
+          >
+            <Button
+              style={{ marginRight: 20 }}
+              className="save-btn"
+              variant="contained"
+              onClick={handleEdit}
+            >
+              Save
+            </Button>
+            <Button
+              className="cancel-btn"
+              variant="contained"
+              onClick={handleCancelEditModal}
+            >
+              Cancel
+            </Button>
+          </div>
+        </Modal>
         <div className="add-student-subject-top">
           <div className="add-student-subject-top-select-box">
             <div className="top-bar-line-left">
