@@ -25,6 +25,7 @@ import {
   getStudentSubjects,
   addStudentSubjects,
   updateStudentSubjects,
+  deleteStudentSubjects,
 } from "../../services/actions/studentSubjectAction";
 import { getCategories } from "../../services/actions/categoriesAction";
 import { getSubjects } from "../../services/actions/subjectAction";
@@ -60,6 +61,7 @@ const AddStudentSubjects = () => {
   const [displayButtons, setDisplayButtons] = useState(false);
   const [checkBoxEror, setCheckBoxError] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [documentId, setDocumentId] = useState("");
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
@@ -117,6 +119,11 @@ const AddStudentSubjects = () => {
     setIsEditModalOpen(true);
   };
 
+  const showdeleteModal = (record) => {
+    setDocumentId(record._id);
+    setIsDeleteModalOpen(true);
+  };
+
   const handleChangAccess = (value) => {
     setEditForm({ ...editForm, ["studentAccess"]: value });
   };
@@ -124,11 +131,15 @@ const AddStudentSubjects = () => {
   const handleCancelEditModal = () => {
     setIsEditModalOpen(false);
   };
+  
+  const handleCancelDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
 
   const handleEdit = async () => {
     let data = await dispatch(updateStudentSubjects(documentId, editForm)); // save new student-subject data
     if (data) {
-      handleCancelEditModal()
+      handleCancelEditModal();
       message.success({
         content: "Subject Edited Successfully",
         style: {
@@ -136,7 +147,21 @@ const AddStudentSubjects = () => {
         },
       });
     }
-    handleCancelEditModal()
+    handleCancelEditModal();
+  };
+
+  const handleDelete = async () => {
+    let data = await dispatch(deleteStudentSubjects(documentId)); // save new student-subject data
+    if (data) {
+      handleCancelDeleteModal();
+      message.success({
+        content: "Subject deleted Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    handleCancelDeleteModal();
   };
 
   const submit = async () => {
@@ -206,7 +231,7 @@ const AddStudentSubjects = () => {
 
         <DeleteOutlined
           className="action-icons"
-          // onClick={() => this.showDeleteModal(record)}
+          onClick={() => showdeleteModal(record)}
         />
       </Space>
     );
@@ -256,12 +281,6 @@ const AddStudentSubjects = () => {
         return moment(date).format("YYYY-MM-DD");
       },
     },
-    // {
-    //   title: "Reason For Stop",
-    //   dataIndex: "reasonForStop",
-    //   key: "reasonForStop",
-    //   responsive: ["sm"],
-    // },
     {
       title: "Student Status",
       dataIndex: "studentAccess",
@@ -325,6 +344,43 @@ const AddStudentSubjects = () => {
               onClick={handleCancelEditModal}
             >
               Cancel
+            </Button>
+          </div>
+        </Modal>
+
+        <Modal
+          className="change-access-modal"
+          open={isDeleteModalOpen}
+          onCancel={handleCancelEditModal}
+          footer={null}
+        >
+          <div style={{}} className="change-access">
+            <p style={{ fontSize: 18 }}>
+              Are you sure want to delete this subject??
+            </p>
+          </div>
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            className="add-student-buttons"
+          >
+            <Button
+              style={{ marginRight: 20 }}
+              className="save-btn"
+              variant="contained"
+              onClick={handleDelete}
+            >
+              Yes
+            </Button>
+            <Button
+              className="cancel-btn"
+              variant="contained"
+              onClick={handleCancelDeleteModal}
+            >
+              No
             </Button>
           </div>
         </Modal>

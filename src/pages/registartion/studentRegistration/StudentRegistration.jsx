@@ -9,7 +9,12 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Input, Select, Space, Table, Modal, DatePicker } from "antd";
-import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  EyeOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  FileAddOutlined,
+} from "@ant-design/icons";
 
 import "./studentregistration.scss";
 
@@ -166,13 +171,33 @@ const StudentRegistration = () => {
       }
     }
   };
+  const navigateToAddSubject = (record) => {
+    navigate(
+      RoutesConstant.addStudentSubject + "?id=" + record._id +
+      "&cat-id=" +
+      record.category_id,
+      {
+        // navigate to add student subject page
+        replace: true,
+      }
+    );
+  };
 
   const showActions = (record) => {
     return (
       <Space size="middle">
+        <FileAddOutlined
+          className="action-icons"
+          onClick={() => navigateToAddSubject(record)}
+        />
         <EyeOutlined
           className="action-icons"
           // onClick={() => this.showEditModal(record)}
+        />
+
+        <EditOutlined
+          className="action-icons"
+          // onClick={() => showEditModal(record)}
         />
 
         <DeleteOutlined
