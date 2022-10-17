@@ -30,6 +30,7 @@ import {
 import { getCategories } from "../../services/actions/categoriesAction";
 import { getSubjects } from "../../services/actions/subjectAction";
 import { RoutesConstant, StringConstant } from "../../assets/constants";
+import { SubjectViewModal } from "../../components";
 
 const accessArray = [
   StringConstant.studentAccess.Active,
@@ -63,6 +64,8 @@ const AddStudentSubjects = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [documentId, setDocumentId] = useState("");
+  const [isShowModalOpen, setShowIsModalOpen] = useState(false);
+  const [recordDetails, setRecordDetails] = useState();
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -119,6 +122,11 @@ const AddStudentSubjects = () => {
     setIsEditModalOpen(true);
   };
 
+  const showSubjectModal = (record) => {
+    setRecordDetails(record);
+    setShowIsModalOpen(true);
+  };
+
   const showdeleteModal = (record) => {
     setDocumentId(record._id);
     setIsDeleteModalOpen(true);
@@ -126,14 +134,21 @@ const AddStudentSubjects = () => {
 
   const handleChangAccess = (value) => {
     setEditForm({ ...editForm, ["studentAccess"]: value });
+    if (value == StringConstant.studentAccess.Active) {
+      setEditForm({ ...editForm, ["tempStopDate"]: null });
+    }
   };
 
   const handleCancelEditModal = () => {
     setIsEditModalOpen(false);
   };
-  
+
   const handleCancelDeleteModal = () => {
     setIsDeleteModalOpen(false);
+  };
+
+  const handleCancelShowModal = () => {
+    setShowIsModalOpen(false);
   };
 
   const handleEdit = async () => {
@@ -219,11 +234,10 @@ const AddStudentSubjects = () => {
   const showActions = (record) => {
     return (
       <Space size="middle">
-        <EyeOutlined
+        {/* <EyeOutlined
           className="action-icons"
-
-          // onClick={() => this.showEditModal(record)}
-        />
+          onClick={() => showSubjectModal(record)}
+        /> */}
         <EditOutlined
           className="action-icons"
           onClick={() => showEditModal(record)}
@@ -262,7 +276,7 @@ const AddStudentSubjects = () => {
       },
     },
     {
-      title: "Addmition",
+      title: "Admission",
       dataIndex: "admition",
       key: "admition",
       render: (data, record) => {
@@ -279,7 +293,11 @@ const AddStudentSubjects = () => {
       key: "tempStopDate",
       responsive: ["sm"],
       render: (date, record) => {
-        return moment(date).format("YYYY-MM-DD");
+        if (date == null) {
+          return "";
+        } else {
+          return moment(date).format("YYYY-MM-DD");
+        }
       },
     },
     {
@@ -298,6 +316,15 @@ const AddStudentSubjects = () => {
   return (
     <div className="add-student-subject">
       <div className="add-student-subject-wrapper">
+        <Modal
+          className="change-access-modal"
+          // title="Change Student Access"
+          open={isShowModalOpen}
+          onCancel={handleCancelShowModal}
+          footer={null}
+        >
+          <SubjectViewModal details={recordDetails} />
+        </Modal>
         <Modal
           className="change-access-modal"
           title="Change Student Access"
