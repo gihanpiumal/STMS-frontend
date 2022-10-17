@@ -256,6 +256,7 @@ const AddStudentSubjects = () => {
       title: "Enrall Date",
       dataIndex: "enrollDate",
       key: "enrollDate",
+      responsive: ["sm"],
       render: (date, record) => {
         return moment(date).format("YYYY-MM-DD");
       },

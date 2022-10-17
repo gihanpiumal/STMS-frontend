@@ -23,15 +23,17 @@ import {
   deleteStudent,
 } from "../../../services/actions/studentAction";
 import { RoutesConstant } from "../../../assets/constants";
+import { UserModal } from "../../../components";
 
 const { Option } = Select;
 
 const StudentRegistration = () => {
   // states difine
   const [filter, setFilter] = useState("block");
-  const [addModal, setAddModal] = useState(false);
+  const [userModalOpen, setUserModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [documentId, setDocumentId] = useState("");
+  const [recordDetails, setRecordDetails] = useState();
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -68,8 +70,18 @@ const StudentRegistration = () => {
     setIsDeleteModalOpen(true);
   };
 
+  const showUserModal = (record) => {
+    setDocumentId(record._id);
+    setRecordDetails(record);
+    setUserModalOpen(true);
+  };
+
   const handleCancelDeleteModal = () => {
     setIsDeleteModalOpen(false);
+  };
+
+  const handleCancelUserModal = () => {
+    setUserModalOpen(false);
   };
 
   const handleDelete = async () => {
@@ -116,7 +128,7 @@ const StudentRegistration = () => {
         />
         <EyeOutlined
           className="action-icons"
-          // onClick={() => this.showEditModal(record)}
+          onClick={() => showUserModal(record)}
         />
 
         <EditOutlined
@@ -171,6 +183,14 @@ const StudentRegistration = () => {
   return (
     <div className="student-reg">
       <div className="student-reg-wrapper">
+        <Modal
+          className="change-access-modal"
+          open={userModalOpen}
+          onCancel={handleCancelUserModal}
+          footer={null}
+        >
+          <UserModal details = {recordDetails} />
+        </Modal>
         <Modal
           className="change-access-modal"
           open={isDeleteModalOpen}
