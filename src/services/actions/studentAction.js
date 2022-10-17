@@ -23,15 +23,15 @@ export const addStudent = (obj) => async (dispatch) => {
   }
 };
 
-// export const updateUser = (id, obj) => async (dispatch) => {
-//   try {
-//     const { data } = await httpCollection.putData(subURL + "update/" + id, obj);
-//     dispatch({ type: actionTypes.update_user, payload: data.details });
-//     return data;
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+export const updateStudent = (id, obj) => async (dispatch) => {
+  try {
+    const { data } = await httpCollection.putData(subURL + "update/" + id, obj);
+    dispatch({ type: actionTypes.update_student, payload: data.details });
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 export const deleteStudent = (id) => async (dispatch) => {
   try {

@@ -23,7 +23,7 @@ import {
   deleteStudent,
 } from "../../../services/actions/studentAction";
 import { RoutesConstant } from "../../../assets/constants";
-import { UserModal } from "../../../components";
+import { UserModal, StudentEditModal } from "../../../components";
 
 const { Option } = Select;
 
@@ -34,6 +34,7 @@ const StudentRegistration = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [documentId, setDocumentId] = useState("");
   const [recordDetails, setRecordDetails] = useState();
+  const [EditModal, setEditModal] = useState(false);
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -70,6 +71,11 @@ const StudentRegistration = () => {
     setIsDeleteModalOpen(true);
   };
 
+  const showEditModal = (record) => {
+    setRecordDetails(record);
+    setEditModal(true);
+  };
+
   const showUserModal = (record) => {
     setDocumentId(record._id);
     setRecordDetails(record);
@@ -82,6 +88,10 @@ const StudentRegistration = () => {
 
   const handleCancelUserModal = () => {
     setUserModalOpen(false);
+  };
+  
+  const handleCancelEditModal = () => {
+    setEditModal(false);
   };
 
   const handleDelete = async () => {
@@ -133,7 +143,7 @@ const StudentRegistration = () => {
 
         <EditOutlined
           className="action-icons"
-          // onClick={() => showEditModal(record)}
+          onClick={() => showEditModal(record)}
         />
 
         <DeleteOutlined
@@ -183,13 +193,22 @@ const StudentRegistration = () => {
   return (
     <div className="student-reg">
       <div className="student-reg-wrapper">
+        
+      <Modal
+          className="change-access-modal"
+          open={EditModal}
+          onCancel={handleCancelEditModal}
+          footer={null}
+        >
+          <StudentEditModal details={recordDetails} />
+        </Modal>
         <Modal
           className="change-access-modal"
           open={userModalOpen}
           onCancel={handleCancelUserModal}
           footer={null}
         >
-          <UserModal details = {recordDetails} />
+          <UserModal details={recordDetails} />
         </Modal>
         <Modal
           className="change-access-modal"
