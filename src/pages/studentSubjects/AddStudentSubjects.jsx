@@ -151,7 +151,7 @@ const AddStudentSubjects = () => {
   };
 
   const handleDelete = async () => {
-    let data = await dispatch(deleteStudentSubjects(documentId)); // save new student-subject data
+    let data = await dispatch(deleteStudentSubjects(documentId)); // delete student-subject data
     if (data) {
       handleCancelDeleteModal();
       message.success({
@@ -351,7 +351,7 @@ const AddStudentSubjects = () => {
         <Modal
           className="change-access-modal"
           open={isDeleteModalOpen}
-          onCancel={handleCancelEditModal}
+          onCancel={handleCancelDeleteModal}
           footer={null}
         >
           <div style={{}} className="change-access">

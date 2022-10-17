@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Input, Select, Space, Table, Modal, DatePicker } from "antd";
+import { Input, Select, Space, Table, Modal, message } from "antd";
 import {
   EyeOutlined,
   DeleteOutlined,
@@ -18,78 +18,20 @@ import {
 
 import "./studentregistration.scss";
 
-import { getStudents } from "../../../services/actions/studentAction";
+import {
+  getStudents,
+  deleteStudent,
+} from "../../../services/actions/studentAction";
 import { RoutesConstant } from "../../../assets/constants";
 
 const { Option } = Select;
 
 const StudentRegistration = () => {
-  // schema for validation
-
-  const schema = Joi.object({
-    student_id: Joi.string().required().label("Staff ID"),
-    first_name: Joi.string().required().label("First Name"),
-    last_name: Joi.string().required().label("Last Name"),
-    DOB: Joi.date().raw().required().label("DOB"),
-    NIC: Joi.string()
-      .required()
-      .regex(/^([0-9]{9}[x|X|v|V]|[0-9]{12})$/)
-      .label("NIC")
-      .messages({ "string.pattern.base": "Invalid NIC Number" }),
-    phone: Joi.string()
-      .required()
-      .regex(
-        /^(070)\d{7}$|^(071)\d{7}$|^(072)\d{7}$|^(074)\d{7}$|^(075)\d{7}$|^(076)\d{7}$|^(077)\d{7}$|^(078)\d{7}$/,
-        "07xxxxxxxx"
-      )
-      .label("Mobile Number"),
-    email: Joi.string()
-      .required()
-      .empty("")
-      .regex(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        "xxx@xx.xx",
-        ""
-      )
-      .label("Email"),
-    avatar: Joi.string().empty("").label("Profile Picture"),
-    password: Joi.string().required().label("Password"),
-    subject_list: Joi.array()
-      .items(
-        Joi.object().keys({
-          subject_id: Joi.string().required().label("Subject id"),
-        })
-      )
-      .required()
-      .label("Subject id list"),
-    registeredDate: Joi.date().raw().required().label("Registered Date"),
-    access_level: Joi.string().required().label("Access Level"),
-    access_status: Joi.string().required().label("Access Status"),
-    isVerified: Joi.boolean().required().label("Verified"),
-    OTPCode: Joi.number().optional().label("OTP"),
-  });
-
   // states difine
-  const [form, setForm] = useState({
-    student_id: "",
-    first_name: "",
-    last_name: "",
-    DOB: "",
-    NIC: "",
-    phone: "",
-    password: "",
-    registeredDate: "",
-    email: "",
-    avatar: "",
-    subject_list: [],
-    access_level: "001",
-    access_status: "Pending",
-    isVerified: false,
-    OTPCode: 0,
-  });
-  const [errors, setErrors] = useState([]);
   const [filter, setFilter] = useState("block");
   const [addModal, setAddModal] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [documentId, setDocumentId] = useState("");
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -121,61 +63,43 @@ const StudentRegistration = () => {
   };
 
   // modal controll
-  const showAddModal = () => {
+  const showdeleteModal = (record) => {
+    setDocumentId(record._id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCancelDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleDelete = async () => {
+    let data = await dispatch(deleteStudent(documentId)); // delete student-subject data
+    if (data) {
+      handleCancelDeleteModal();
+      message.success({
+        content: "Student deleted Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    handleCancelDeleteModal();
+  };
+
+  const addStudent = () => {
     navigate(RoutesConstant.addStudent, {
       // navigate to loogin page
       replace: true,
     });
   };
 
-  const cancelAddModal = () => {
-    setAddModal(false);
-  };
-
-  // submit validation
-  const validate = () => {
-    const option = {
-      abortEarly: false,
-    };
-
-    const { error } = schema.validate(form, option);
-
-    if (!error) return null;
-    const errorData = {};
-    for (let item of error.details) {
-      const name = item.path[0];
-      const message = item.message;
-      errorData[name] = message;
-    }
-
-    setErrors(errorData);
-    return errorData;
-  };
-
-  // onclick validation
-  const validateProperty = (name, value) => {
-    const option = {
-      abortEarly: false,
-    };
-
-    form[name] = value.currentTarget.value;
-    const { error } = schema.validate(form, option);
-
-    const errorData = {};
-    setErrors({ ...errors, [name]: null });
-    if (error) {
-      for (let item of error.details) {
-        if (item.path[0] === name) {
-          setErrors({ ...errors, [name]: item.message });
-        }
-      }
-    }
-  };
   const navigateToAddSubject = (record) => {
     navigate(
-      RoutesConstant.addStudentSubject + "?id=" + record._id +
-      "&cat-id=" +
-      record.category_id,
+      RoutesConstant.addStudentSubject +
+        "?id=" +
+        record._id +
+        "&cat-id=" +
+        record.category_id,
       {
         // navigate to add student subject page
         replace: true,
@@ -202,7 +126,7 @@ const StudentRegistration = () => {
 
         <DeleteOutlined
           className="action-icons delete-icon"
-          // onClick={() => this.showDeleteModal(record)}
+          onClick={() => showdeleteModal(record)}
         />
       </Space>
     );
@@ -247,11 +171,47 @@ const StudentRegistration = () => {
   return (
     <div className="student-reg">
       <div className="student-reg-wrapper">
+        <Modal
+          className="change-access-modal"
+          open={isDeleteModalOpen}
+          onCancel={handleCancelDeleteModal}
+          footer={null}
+        >
+          <div style={{}} className="change-access">
+            <p style={{ fontSize: 18 }}>
+              Are you sure want to delete this Student??
+            </p>
+          </div>
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            className="add-student-buttons"
+          >
+            <Button
+              style={{ marginRight: 20 }}
+              className="save-btn"
+              variant="contained"
+              onClick={handleDelete}
+            >
+              Yes
+            </Button>
+            <Button
+              className="cancel-btn"
+              variant="contained"
+              onClick={handleCancelDeleteModal}
+            >
+              No
+            </Button>
+          </div>
+        </Modal>
         <div className="student-reg-top">
           <div className="student-reg-top-search">
             <AddBoxIcon
               className="registration-add-Icon"
-              onClick={showAddModal}
+              onClick={addStudent}
             />
             <Input
               className="registration-search-input"
