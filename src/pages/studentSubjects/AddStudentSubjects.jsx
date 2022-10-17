@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Joi from "joi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
 
 import {
@@ -15,19 +15,25 @@ import {
 } from "antd";
 import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
 import Button from "@mui/material/Button";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 import "./addstudentsubjects.scss";
 
 import { getStudents, addStudent } from "../../services/actions/studentAction";
-import { getStudentSubjects } from "../../services/actions/studentSubjectAction";
+import {
+  getStudentSubjects,
+  addStudentSubjects,
+} from "../../services/actions/studentSubjectAction";
 import { getCategories } from "../../services/actions/categoriesAction";
 import { getSubjects } from "../../services/actions/subjectAction";
 import { RoutesConstant } from "../../assets/constants";
 
 const AddStudentSubjects = () => {
-  const studentID = "634ba62244be98edeffd01fb";
-  const studentSubjectCategoryID = "634b6de49fbd3802993d7f5a";
+  const location = useLocation();
+  const studentID = new URLSearchParams(location.search).get("id");
+  const studentSubjectCategoryID = new URLSearchParams(location.search).get(
+    "cat-id"
+  );
   const [form, setForm] = useState({
     student_id: studentID,
     subject_id: "",
@@ -41,6 +47,7 @@ const AddStudentSubjects = () => {
   const [admitionValuue, setAdmitionValue] = useState("");
   const [displayButtons, setDisplayButtons] = useState(false);
   const [checkBoxEror, setCheckBoxError] = useState(false);
+  const [checkBoxValue, setChckBoxValue] = useState(false);
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -71,12 +78,16 @@ const AddStudentSubjects = () => {
   const handleChangeSubject = (value) => {
     setForm({ ...form, ["subject_id"]: value });
     subjectList.map((val) => {
-      if (val.isAdmition) {
-        setIsAdmitionWant(true);
-        setAdmitionValue(val.admition);
-      }
-      {
-        !form.admition && setDisplayButtons(true);
+      if (val._id == value) {
+        if (val.isAdmition) {
+          setIsAdmitionWant(true);
+          setAdmitionValue(val.admition);
+        } else {
+          setIsAdmitionWant(false);
+        }
+        {
+          !form.admition && setDisplayButtons(true);
+        }
       }
     });
   };
@@ -91,24 +102,44 @@ const AddStudentSubjects = () => {
       setCheckBoxError(true);
       return;
     }
-    // if (validate()) {
-    //   return;
-    // }
 
+    let selectSubjectId = false;
     studentSubjectData.map((val) => {
       if (val.subject_id == form.subject_id) {
-        console.log("already exixit");
-        return;
+        selectSubjectId = true;
       }
     });
 
-    // let data = await dispatch(addStudent(form)); // save new student data
-    // if (data) {
-    //   message.success("Student added successfullly", 3);
-    //   goBack();
-    // }
+    if (selectSubjectId) {
+      message.error({
+        content: "Subject Already Added",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return;
+    }
 
-    console.log(form);
+    let data = await dispatch(addStudentSubjects(form)); // save new student-subject data
+    if (data) {
+      message.success({
+        content: "Subject Added Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+
+      setIsAdmitionWant(false);
+      setDisplayButtons(false);
+      setForm({ ...form, ["subject_id"]: "", ["admition"]: false });
+      // goBack();
+    }
+  };
+
+  const onCancel = () => {
+    setIsAdmitionWant(false);
+    setDisplayButtons(false);
+    setForm({ ...form, ["subject_id"]: "", ["admition"]: false });
   };
 
   const goBack = () => {
@@ -164,7 +195,7 @@ const AddStudentSubjects = () => {
       render: (data, record) => {
         let status = "";
         {
-          data == true ? (status = "Done") : (status = "Not Done");
+          data == true ? (status = "Done") : (status = "No need");
         }
         return status;
       },
@@ -199,18 +230,26 @@ const AddStudentSubjects = () => {
       <div className="add-student-subject-wrapper">
         <div className="add-student-subject-top">
           <div className="add-student-subject-top-select-box">
-            <div className="title">Add Subject</div>
-            <div className="select-box">
-              <Select
-                className="add-student-data-entity-select"
-                onChange={(value) => handleChangeSubject(value)}
-              >
-                {subjectList.map((prop, index) => (
-                  <Select.Option key={index} value={prop._id}>
-                    {prop.subject_name}
-                  </Select.Option>
-                ))}
-              </Select>
+            <div className="top-bar-line-left">
+              <div className="title">Add Subject</div>
+              <div className="select-box">
+                <Select
+                  value={form.subject_id}
+                  className="add-student-data-entity-select"
+                  onChange={(value) => handleChangeSubject(value)}
+                >
+                  {subjectList.map((prop, index) => (
+                    <Select.Option key={index} value={prop._id}>
+                      {prop.subject_name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+            </div>
+            <div className="top-bar-line-right">
+              <Button className="back-btn" variant="contained" onClick={goBack}>
+                Back
+              </Button>
             </div>
           </div>
           <div className="middle-middledata">
@@ -220,6 +259,7 @@ const AddStudentSubjects = () => {
                 <div className="admission-checkbox">
                   <Checkbox
                     className="admission-checkbox-value"
+                    defaultChecked={false}
                     onChange={(e) => {
                       setAdmission(e);
                     }}
@@ -246,7 +286,7 @@ const AddStudentSubjects = () => {
                 <Button
                   className="cancel-btn"
                   variant="contained"
-                  onClick={goBack}
+                  onClick={onCancel}
                 >
                   Cancel
                 </Button>

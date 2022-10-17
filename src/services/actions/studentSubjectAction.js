@@ -16,15 +16,15 @@ export const getStudentSubjects = (obj) => async (dispatch) => {
   }
 };
 
-// export const addStudent = (obj) => async (dispatch) => {
-//   try {
-//     const { data } = await httpCollection.postData(subURL + "new/add", obj);
-//     dispatch({ type: actionTypes.add_subject, payload: data.details });
-//     return data;
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
+export const addStudentSubjects = (obj) => async (dispatch) => {
+  try {
+    const { data } = await httpCollection.postData(subURL + "new/add", obj);
+    dispatch({ type: actionTypes.add_student_subject, payload: data.details });
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 // export const updateUser = (id, obj) => async (dispatch) => {
 //   try {
