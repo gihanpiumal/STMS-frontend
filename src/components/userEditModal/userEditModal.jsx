@@ -6,9 +6,7 @@ import moment from "moment";
 import { Input, Select, DatePicker, message, Modal } from "antd";
 import Button from "@mui/material/Button";
 
-import "./studenteditmodal.scss";
-
-import {updateStudent} from "../../services/actions/studentAction"
+import "./usereditmodal.scss";
 
 // schema for validation
 
@@ -40,7 +38,8 @@ const schema = Joi.object({
   avatar: Joi.string().empty("").label("Profile Picture"),
 });
 
-const StudentEditModal = ({ details,editedData }) => {
+const StudentEditModal = ({ details, title, editedData }) => {
+  console.log(details);
   // states difine
   const [form, setForm] = useState({
     first_name: details.first_name,
@@ -52,7 +51,7 @@ const StudentEditModal = ({ details,editedData }) => {
     avatar: details.avatar,
   });
   const [errors, setErrors] = useState([]);
-  
+
   const dispatch = useDispatch();
 
   // submit validation
@@ -104,7 +103,7 @@ const StudentEditModal = ({ details,editedData }) => {
       return;
     }
 
-    return editedData(form)
+    return editedData(form);
   };
 
   const goBack = () => {};
@@ -112,7 +111,7 @@ const StudentEditModal = ({ details,editedData }) => {
   return (
     <div className="student-edit-modal">
       <div className="student-edit-modal-wrapper">
-        <div className="student-edit-modal-title">Edit Student</div>
+        <div className="student-edit-modal-title">{title}</div>
         <div className="student-edit-modal-middle">
           <div className="add-student-data-entity">
             <div className="add-student-data-entity-lable">First Name</div>
@@ -152,7 +151,7 @@ const StudentEditModal = ({ details,editedData }) => {
               <DatePicker
                 className="add-student-data-entity-input"
                 // defaultValue={form.DOB}
-                defaultValue={moment(form.DOB, 'YYYY-MM-DD')}
+                defaultValue={moment(form.DOB, "YYYY-MM-DD")}
                 id="DOB"
                 onChange={setDate}
               />
@@ -170,9 +169,7 @@ const StudentEditModal = ({ details,editedData }) => {
                   validateProperty("NIC", e);
                 }}
               />
-              <p className="input-error">
-                {errors.NIC ? errors.NIC : ""}
-              </p>
+              <p className="input-error">{errors.NIC ? errors.NIC : ""}</p>
             </div>
           </div>
           <div className="add-student-data-entity">
@@ -186,9 +183,7 @@ const StudentEditModal = ({ details,editedData }) => {
                   validateProperty("phone", e);
                 }}
               />
-              <p className="input-error">
-                {errors.phone ? errors.phone : ""}
-              </p>
+              <p className="input-error">{errors.phone ? errors.phone : ""}</p>
             </div>
           </div>
           <div className="add-student-data-entity">
@@ -202,9 +197,7 @@ const StudentEditModal = ({ details,editedData }) => {
                   validateProperty("email", e);
                 }}
               />
-              <p className="input-error">
-                {errors.email ? errors.email : ""}
-              </p>
+              <p className="input-error">{errors.email ? errors.email : ""}</p>
             </div>
           </div>
         </div>

@@ -22,7 +22,7 @@ import {
   updateTeacher,
 } from "../../../services/actions/teacherAction";
 import { RoutesConstant } from "../../../assets/constants";
-import { UserModal } from "../../../components";
+import { UserModal, UserEditModal } from "../../../components";
 
 const { Option } = Select;
 
@@ -212,7 +212,7 @@ const TeacherRegistration = () => {
           onCancel={handleCancelEditModal}
           footer={null}
         >
-          {/* <StudentEditModal details={recordDetails} editedData={editSubmit} /> */}
+          <UserEditModal details={recordDetails} title={"Edit Teacher"} editedData={editSubmit} />
         </Modal>
         <Modal
           className="change-access-modal"

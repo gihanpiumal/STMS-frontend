@@ -22,7 +22,7 @@ import {
   updateStudent,
 } from "../../../services/actions/studentAction";
 import { RoutesConstant } from "../../../assets/constants";
-import { UserModal, StudentEditModal } from "../../../components";
+import { UserModal, UserEditModal } from "../../../components";
 
 const { Option } = Select;
 
@@ -211,7 +211,7 @@ const StudentRegistration = () => {
           onCancel={handleCancelEditModal}
           footer={null}
         >
-          <StudentEditModal details={recordDetails} editedData={editSubmit} />
+          <UserEditModal details={recordDetails} title={"Edit Student"} editedData={editSubmit} />
         </Modal>
         <Modal
           className="change-access-modal"
