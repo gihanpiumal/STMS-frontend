@@ -130,6 +130,8 @@ const TeacherRegistration = () => {
   // };
 
   const editSubmit = async (editForm) => {
+    console.log(recordDetails._id);
+    console.log(editForm);
     let data = await dispatch(updateTeacher(recordDetails._id, editForm)); // save new student data
     if (data) {
       message.success({

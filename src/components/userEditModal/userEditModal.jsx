@@ -39,7 +39,6 @@ const schema = Joi.object({
 });
 
 const StudentEditModal = ({ details, title, editedData }) => {
-  console.log(details);
   // states difine
   const [form, setForm] = useState({
     first_name: details.first_name,
@@ -51,8 +50,10 @@ const StudentEditModal = ({ details, title, editedData }) => {
     avatar: details.avatar,
   });
   const [errors, setErrors] = useState([]);
+  
 
   const dispatch = useDispatch();
+
 
   // submit validation
   const validate = () => {
