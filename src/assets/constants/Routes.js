@@ -12,6 +12,7 @@ export default {
   teacherRegistration: "/teacher-registration",
   addTeacher: "/teacher-registration/add-teacher",
   staffRegistration: "/staff-registration",
+  addStaff: "/staff-registration/add-staff",
   studentPayment: "/student-payment",
   teacherPayment: "/teacher-payment",
   staffPayment: "/staff-payment",

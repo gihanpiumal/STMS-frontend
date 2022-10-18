@@ -115,19 +115,6 @@ const TeacherRegistration = () => {
     });
   };
 
-  // const navigateToAddSubject = (record) => {
-  //   navigate(
-  //     RoutesConstant.addStudentSubject +
-  //       "?id=" +
-  //       record._id +
-  //       "&cat-id=" +
-  //       record.category_id,
-  //     {
-  //       // navigate to add student subject page
-  //       replace: true,
-  //     }
-  //   );
-  // };
 
   const editSubmit = async (editForm) => {
     console.log(recordDetails._id);

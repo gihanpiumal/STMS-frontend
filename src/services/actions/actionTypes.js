@@ -17,6 +17,12 @@ export default {
     update_teacher: "UPDATE_TEACHER",
     delete_teacher: "DELETE_TEACHER",
     
+    // staff action types
+    get_all_staffs: "FETCH_ALL_STAFF",
+    add_staff: "ADD_STAFF",
+    update_staff: "UPDATE_STAFF",
+    delete_staff: "DELETE_STAFF",
+    
     
     // caterories action types
     get_all_categories: "FETCH_ALL_CATEGORIES",

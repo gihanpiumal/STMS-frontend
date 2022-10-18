@@ -1,0 +1,126 @@
+.staff-reg {
+    padding: 10px;
+    .staff-reg-wrapper {
+      width: 100%;
+      .staff-reg-top {
+        padding: 10px;
+        border: 1px solid #fff;
+        .staff-reg-top-search {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .registration-add-Icon {
+            font-size: 40px;
+            cursor: pointer;
+            :hover {
+              color: #270082;
+            }
+          }
+          .registration-search-input {
+          }
+          .registration-search-Icon {
+            font-size: 40px;
+            cursor: pointer;
+            :hover {
+              color: #270082;
+            }
+          }
+          .registration-filter-Icon {
+            font-size: 40px;
+            cursor: pointer;
+            :hover {
+              color: #270082;
+            }
+          }
+        }
+        .staff-reg-top-filter {
+          margin-top: 20px;
+          border: 1px solid #fff;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          // padding-left: 20%;
+          @media screen and (max-width: 600px) {
+            flex-direction: column;
+          }
+          .staff-reg-top-filter-email {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              margin-bottom: 10px;
+            }
+            .email-lablle {
+              font-size: 18px;
+              margin-right: 10px;
+            }
+            .email-input {
+              width: 50%;
+              @media screen and (max-width: 600px) {
+                width: 100%;
+              }
+            }
+          }
+          .staff-reg-top-filter-status {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              margin-bottom: 20px;
+            }
+            .status-lablle {
+              font-size: 18px;
+              margin-right: 10px;
+              @media screen and (max-width: 600px) {
+                margin-right: 4px;
+              }
+            }
+            .status-input {
+              width: 50%;
+              @media screen and (max-width: 600px) {
+                width: 100%;
+              }
+            }
+          }
+          .staff-reg-top-filter-buttons {
+            // flex: 1;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              margin-bottom: 10px;
+              align-items: flex-end;
+              margin-left: 85%;
+            }
+            .filter-btn {
+              margin-right: 20px;
+            }
+            .cancel-btn {
+            }
+          }
+        }
+        .staff-reg-top-filterblock {
+          display: none;
+        }
+      }
+      .staff-reg-middle {
+        margin-top: 30px;
+        padding: 10px;
+        border: 1px solid #fff;
+        width: 100%;
+        .staff-tbl-title {
+          font-size: 28px;
+          font-weight: 600;
+        }
+        .staff-registration-tbl {
+          width: 100%;
+        }
+      }
+      .staff-reg-bottom {
+      }
+    }
+  }
+  
