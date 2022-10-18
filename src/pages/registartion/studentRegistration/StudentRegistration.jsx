@@ -21,6 +21,7 @@ import "./studentregistration.scss";
 import {
   getStudents,
   deleteStudent,
+  updateStudent,
 } from "../../../services/actions/studentAction";
 import { RoutesConstant } from "../../../assets/constants";
 import { UserModal, StudentEditModal } from "../../../components";
@@ -89,7 +90,7 @@ const StudentRegistration = () => {
   const handleCancelUserModal = () => {
     setUserModalOpen(false);
   };
-  
+
   const handleCancelEditModal = () => {
     setEditModal(false);
   };
@@ -127,6 +128,19 @@ const StudentRegistration = () => {
         replace: true,
       }
     );
+  };
+
+  const editSubmit = async (editForm) => {
+    let data = await dispatch(updateStudent(recordDetails._id, editForm)); // save new student data
+    if (data) {
+      message.success({
+        content: "Student Edited Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    setEditModal(false);
   };
 
   const showActions = (record) => {
@@ -193,14 +207,13 @@ const StudentRegistration = () => {
   return (
     <div className="student-reg">
       <div className="student-reg-wrapper">
-        
-      <Modal
+        <Modal
           className="change-access-modal"
           open={EditModal}
           onCancel={handleCancelEditModal}
           footer={null}
         >
-          <StudentEditModal details={recordDetails} />
+          <StudentEditModal details={recordDetails} editedData={editSubmit} />
         </Modal>
         <Modal
           className="change-access-modal"
@@ -258,8 +271,9 @@ const StudentRegistration = () => {
             />
             <SearchIcon className="registration-search-Icon" />
             <FilterAltIcon
+              disabled ={true}
               className="registration-filter-Icon"
-              onClick={handleFilter}
+              // onClick={handleFilter}
             />
           </div>
           <div className={"student-reg-top-filter" + filter}>

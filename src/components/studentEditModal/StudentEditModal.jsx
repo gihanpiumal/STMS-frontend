@@ -40,7 +40,7 @@ const schema = Joi.object({
   avatar: Joi.string().empty("").label("Profile Picture"),
 });
 
-const StudentEditModal = ({ details }) => {
+const StudentEditModal = ({ details,editedData }) => {
   // states difine
   const [form, setForm] = useState({
     first_name: details.first_name,
@@ -104,17 +104,7 @@ const StudentEditModal = ({ details }) => {
       return;
     }
 
-    let data = await dispatch(updateStudent(details._id, form)); // save new student data
-    if (data) {
-      message.success({
-        content: "Student Edited Successfully",
-        style: {
-          marginTop: "10vh",
-        },
-      });
-    }
-    console.log(form);
-    setErrors([]);
+    return editedData(form)
   };
 
   const goBack = () => {};
