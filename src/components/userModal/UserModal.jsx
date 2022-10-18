@@ -18,7 +18,7 @@ const UserModal = ({ details }) => {
           </div>
           <div className="user-modal-details-detail">
             <p className="user-modal-topic">Registeration No : </p>
-            <p className="user-modal-value">{details.student_id}</p>
+            <p className="user-modal-value">{details.student_id || details.teacher_id}</p>
           </div>
           <div className="user-modal-details-detail">
             <p className="user-modal-topic">Date of birth : </p>

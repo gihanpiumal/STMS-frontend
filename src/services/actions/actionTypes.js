@@ -11,6 +11,13 @@ export default {
     update_subject: "UPDATE_SUBJECT",
     delete_subject: "DELETE_SUBJECT",
     
+    // teacher action types
+    get_all_teachers: "FETCH_ALL_TEACHERS",
+    add_teacher: "ADD_TEACHER",
+    update_teacher: "UPDATE_TEACHER",
+    delete_teacher: "DELETE_TEACHER",
+    
+    
     // caterories action types
     get_all_categories: "FETCH_ALL_CATEGORIES",
     add_category: "ADD_CATEGORY",
