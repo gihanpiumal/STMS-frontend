@@ -23,7 +23,6 @@ import {
 } from "../../../services/actions/staffActions";
 import { RoutesConstant } from "../../../assets/constants";
 import { UserModal, UserEditModal } from "../../../components";
-import { updateLocale } from "moment";
 
 const { Option } = Select;
 

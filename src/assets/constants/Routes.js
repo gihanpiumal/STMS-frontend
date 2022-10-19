@@ -19,4 +19,5 @@ export default {
   otherPayment: "/other-payment",
   classes: "/classes",
   extraClasses: "/extra-classes",
+  categories: "/categories",
 };

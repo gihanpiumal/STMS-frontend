@@ -24,6 +24,7 @@ import {
   OtherPayment,
   Classes,
   ExtraClasses,
+  Categories,
 } from "./pages";
 import { RoutesConstant } from "./assets/constants";
 import { Layout } from "./components";
@@ -167,6 +168,14 @@ const App = () => {
             element={
               <>
                 <Layout component={<ExtraClasses />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.categories}
+            element={
+              <>
+                <Layout component={<Categories />} />
               </>
             }
           />

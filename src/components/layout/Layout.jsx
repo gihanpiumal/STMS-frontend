@@ -26,6 +26,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ClassIcon from "@mui/icons-material/Class";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CategoryIcon from "@mui/icons-material/Category";
 
 import "./layout.scss";
 import { RoutesConstant } from "../../assets/constants";
@@ -89,7 +90,7 @@ const Layout = (props) => {
           </Toolbar>
         </AppBar>
         <Drawer
-        className="drawer"
+          className="drawer"
           width={drawerWidth}
           sx={{
             width: drawerWidth,
@@ -171,6 +172,17 @@ const Layout = (props) => {
                 </List>
               </Link>
             </Collapse>
+
+            <Link className="layout-links" to={RoutesConstant.categories}>
+              <ListItem key={"categories"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CategoryIcon style={{ color: "#2192FF" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={"Categories"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
 
             <Link className="layout-links" to={RoutesConstant.subjects}>
               <ListItem key={"Subjects"} disablePadding>
@@ -258,7 +270,7 @@ const Layout = (props) => {
           <div className="layout-logout">
             <List>
               <Link className="layout-links" to={RoutesConstant.login}>
-                <ListItem key={"Subjects"} disablePadding>
+                <ListItem key={"logout"} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
                       <LogoutIcon />
