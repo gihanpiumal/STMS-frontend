@@ -48,8 +48,8 @@ const schema = Joi.object({
   teacher_id: Joi.string().empty("").label("Teacher ID"),
   hall_id: Joi.string().empty("").label("Hall ID"),
   classDate: Joi.string().required().label("Class Date"),
-  startTime: Joi.string().required().label("Start Time"),
-  endTime: Joi.string().required().label("End Time"),
+  startTime: Joi.string().required().label("Start Time and End Time"),
+  endTime: Joi.string().required().label("Start Time and End Time"),
 });
 
 // import "./addsubject.scss";
@@ -161,24 +161,22 @@ const AddSubject = () => {
   };
 
   const submit = async () => {
-    console.log(form);
     if (validate()) {
+      console.log(errors);
       return;
     }
 
-    // let data = await dispatch(addSubject(form)); // save new student data
-    // if (data) {
-    //   message.success({
-    //     content: "Student Added Successfully",
-    //     style: {
-    //       marginTop: "10vh",
-    //     },
-    //   });
-    //   setStudentId(data.details._id);
-    //   setStudentCategoryId(data.details.category_id);
-    //   showNavigateModal();
-    // }
-    // setErrors([]);
+    let data = await dispatch(addSubject(form)); // save new subject data
+    if (data) {
+      message.success({
+        content: "Subject Added Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    setErrors([]);
+    resetForm();
     console.log(form);
   };
 
@@ -188,43 +186,47 @@ const AddSubject = () => {
       replace: true,
     });
   };
-
-  const addSubjects = () => {
-    // navigate(
-    //   RoutesConstant.addStudentSubject +
-    //     "?id=" +
-    //     studentId +
-    //     "&cat-id=" +
-    //     studentCategoryId,
-    //   {
-    //     // navigate to add student subject page
-    //     replace: true,
-    //   }
-    // );
+  const resetForm = () => {
+    setForm({
+      ...form,
+      ["subject_id"]: "",
+      ["subject_name"]: "",
+      ["isAdmition"]: false,
+      ["admition"]: "",
+      ["fees"]: "",
+      ["category_id"]: "",
+      ["teacher_id"]: "",
+      ["hall_id"]: "",
+      ["classDate"]: "",
+      ["startTime"]: "",
+      ["endTime"]: "",
+    });
   };
 
   const handleChangeSelect = (name, value) => {
-    // setCattegoryId(value);
     setForm({ ...form, [name]: value });
-    // {
-    //   subjectList.map((val) => {
-    //     if (val.category_id === value) {
-    //       subjectDataObj.push(val);
-    //     }
-    //   });
-    // }
-
-    // setSubjectIdDataList(subjectDataObj);
   };
 
   const changeRadio = (e) => {
     setForm({ ...form, ["isAdmition"]: e.target.value });
+    if (!e.target.value) {
+      setForm({ ...form, ["admition"]: "0" });
+    }
+  };
+
+  const onChangeTime = (time) => {
+    setForm({ ...form, ["startTime"]: time[0], ["endTime"]: time[1] });
   };
 
   return (
     <div className="add-subject">
       <div className="add-subject-wrapper">
-        <div className="add-subject-title">Add Subject</div>
+        <div className="add-subject-top">
+          <div className="add-subject-title">Add Subject</div>
+          <Button className="back-btn" variant="contained" onClick={goBack}>
+            Back
+          </Button>
+        </div>
         <div className="add-subject-middle">
           <div className="add-subject-data">
             <div className="add-subject-data-left">
@@ -398,6 +400,24 @@ const AddSubject = () => {
                   </Select>
                   <p className="input-error">
                     {errors.classDate ? errors.classDate : ""}
+                  </p>
+                </div>
+              </div>
+
+              <div className="add-subject-data-entity">
+                <div className="add-subject-data-entity-lable">Class Time</div>
+                <div className="add-subject-data-entity-lable-data">
+                  <TimePicker.RangePicker
+                    onChange={(time, timeString) => {
+                      onChangeTime(timeString);
+                    }}
+                  />
+                  <p className="input-error">
+                    {errors.startTime
+                      ? errors.startTime
+                      : "" || errors.endTime
+                      ? errors.endTime
+                      : ""}
                   </p>
                 </div>
               </div>

@@ -43,7 +43,7 @@ const Subjects = () => {
     category_id: "",
     teacher_id: "",
     classDate: "",
-    isAdmition: true,
+    isAdmition: null,
     hall_id: "",
   };
 
@@ -179,9 +179,13 @@ const Subjects = () => {
       dataIndex: "teacher_details",
       key: "teacher_details",
       render: (data, record) => {
-        return data.map((val, index) => {
-          return val.first_name + " " + val.last_name;
-        });
+        if (!data) {
+          return "";
+        } else {
+          return data.map((val, index) => {
+            return val.first_name + " " + val.last_name;
+          });
+        }
       },
     },
     {
@@ -190,9 +194,13 @@ const Subjects = () => {
       key: "category_details",
       responsive: ["sm"],
       render: (data, record) => {
-        return data.map((val, index) => {
-          return val.category_name;
-        });
+        if (!data) {
+          return "";
+        } else {
+          return data.map((val, index) => {
+            return val.category_name;
+          });
+        }
       },
     },
     {
@@ -201,9 +209,13 @@ const Subjects = () => {
       key: "hall_details",
       responsive: ["sm"],
       render: (data, record) => {
-        return data.map((val, index) => {
-          return val.hall_name;
-        });
+        if (!data) {
+          return "";
+        } else {
+          return data.map((val, index) => {
+            return val.hall_name;
+          });
+        }
       },
     },
     {
@@ -240,7 +252,11 @@ const Subjects = () => {
           onCancel={handleCancelEditModal}
           footer={null}
         >
-          <UserEditModal details={recordDetails} title={"Edit Subject"} editedData={editSubmit} />
+          <UserEditModal
+            details={recordDetails}
+            title={"Edit Subject"}
+            editedData={editSubmit}
+          />
         </Modal>
         <Modal
           className="change-access-modal"
@@ -288,17 +304,14 @@ const Subjects = () => {
         </Modal>
         <div className="subject-reg-top">
           <div className="subject-reg-top-search">
-            <AddBoxIcon
-              className="subject-add-Icon"
-              onClick={addSubject}
-            />
+            <AddBoxIcon className="subject-add-Icon" onClick={addSubject} />
             <Input
               className="subject-search-input"
               placeholder="Search by name"
             />
             <SearchIcon className="subject-search-Icon" />
             <FilterAltIcon
-              disabled ={true}
+              disabled={true}
               className="subject-filter-Icon"
               // onClick={handleFilter}
             />

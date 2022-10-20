@@ -1,95 +1,99 @@
 .add-subject {
-    padding: 10px;
-    .add-subject-wrapper {
-      width: 100%;
+  padding: 10px;
+  .add-subject-wrapper {
+    width: 100%;
+    .add-subject-top {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0px 10px 0px;
       .add-subject-title {
         font-size: 22px;
         font-weight: 500;
       }
-      .add-subject-middle {
-        padding: 10px;
-        border: 1px solid #fff;
-        .add-subject-data {
-          display: flex;
-          @media screen and (max-width: 600px) {
-            flex-direction: column;
-          }
-          .add-subject-data-left {
-            flex: 1;
-            padding: 20px;
-            .add-subject-data-entity {
-              display: flex;
-              // justify-content: center;
-              margin-bottom: 20px;
-  
-              .add-subject-data-entity-lable {
-                flex: 1;
-                font-size: 16px;
-                font-weight: 500;
-              }
-  
-              .add-subject-data-entity-lable-data {
-                flex: 4;
-                .add-subject-data-entity-input {
-                  flex: 4;
-                  width: 100%;
-                }
-                .add-subject-data-entity-select {
-                  width: 100%;
-                  @media screen and (max-width: 600px) {
-                    width: 100%;
-                  }
-                }
-                .input-error {
-                  color: rgb(167, 21, 21);
-                  font-size: 14px;
-                }
-              }
+    }
+    .add-subject-middle {
+      padding: 10px;
+      border: 1px solid #fff;
+      .add-subject-data {
+        display: flex;
+        @media screen and (max-width: 600px) {
+          flex-direction: column;
+        }
+        .add-subject-data-left {
+          flex: 1;
+          padding: 20px;
+          .add-subject-data-entity {
+            display: flex;
+            // justify-content: center;
+            margin-bottom: 20px;
+
+            .add-subject-data-entity-lable {
+              flex: 1;
+              font-size: 16px;
+              font-weight: 500;
             }
-          }
-          .add-subject-data-right {
-            flex: 1;
-            padding: 20px;
-            .add-subject-data-entity {
-              display: flex;
-              justify-content: center;
-              margin-bottom: 20px;
-              .add-subject-data-entity-lable {
-                flex: 1;
-                font-size: 16px;
-                font-weight: 500;
-              }
-              .add-subject-data-entity-lable-data {
+
+            .add-subject-data-entity-lable-data {
+              flex: 4;
+              .add-subject-data-entity-input {
                 flex: 4;
-                .add-subject-data-entity-input {
-                  flex: 4;
-                }
-                .add-subject-data-entity-select {
+                width: 100%;
+              }
+              .add-subject-data-entity-select {
+                width: 100%;
+                @media screen and (max-width: 600px) {
                   width: 100%;
-                  @media screen and (max-width: 600px) {
-                    width: 100%;
-                  }
                 }
-                .input-error {
-                  color: rgb(167, 21, 21);
-                  font-size: 14px;
-                }
+              }
+              .input-error {
+                color: rgb(167, 21, 21);
+                font-size: 14px;
               }
             }
           }
         }
-        .add-subject-buttons {
-          margin-top: 20px;
-          display: flex;
-          justify-content: end;
-          padding-right: 20px;
-          .save-btn {
-            margin-right: 20px;
+        .add-subject-data-right {
+          flex: 1;
+          padding: 20px;
+          .add-subject-data-entity {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            .add-subject-data-entity-lable {
+              flex: 1;
+              font-size: 16px;
+              font-weight: 500;
+            }
+            .add-subject-data-entity-lable-data {
+              flex: 4;
+              .add-subject-data-entity-input {
+                flex: 4;
+              }
+              .add-subject-data-entity-select {
+                width: 100%;
+                @media screen and (max-width: 600px) {
+                  width: 100%;
+                }
+              }
+              .input-error {
+                color: rgb(167, 21, 21);
+                font-size: 14px;
+              }
+            }
           }
-          .cancel-btn {
-          }
+        }
+      }
+      .add-subject-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: end;
+        padding-right: 20px;
+        .save-btn {
+          margin-right: 20px;
+        }
+        .cancel-btn {
         }
       }
     }
   }
-  
+}
