@@ -23,7 +23,7 @@ import {
   deleteSubject,
 } from "../../services/actions/subjectAction";
 import { RoutesConstant } from "../../assets/constants";
-import { UserModal, UserEditModal } from "../../components";
+import { SubjectEditModal, SubjectViewModal } from "../../components";
 
 const { Option } = Select;
 
@@ -252,9 +252,8 @@ const Subjects = () => {
           onCancel={handleCancelEditModal}
           footer={null}
         >
-          <UserEditModal
+          <SubjectEditModal
             details={recordDetails}
-            title={"Edit Subject"}
             editedData={editSubmit}
           />
         </Modal>
@@ -264,7 +263,7 @@ const Subjects = () => {
           onCancel={handleCancelUserModal}
           footer={null}
         >
-          <UserModal details={recordDetails} />
+          <SubjectViewModal details={recordDetails} />
         </Modal>
         <Modal
           className="change-access-modal"

@@ -8,9 +8,9 @@
 //   background-position: center;
 //   background-repeat: no-repeat;
 //   background-size: cover;
-//   @media screen and (max-height: 100%) {
-//     height: auto;
-//   }
+    @media screen and (min-height: 850px) {
+      height: auto;
+    }
   .app-wrapper {
     padding: 0px 0px 0px 0px;
     @media screen and (max-width: 1000px) {
