@@ -17,6 +17,12 @@ export default {
     update_teacher: "UPDATE_TEACHER",
     delete_teacher: "DELETE_TEACHER",
     
+    // hall action types
+    get_all_halls: "FETCH_ALL_HALLS",
+    add_hall: "ADD_HALL",
+    update_hall: "UPDATE_HALL",
+    delete_hall: "DELETE_HALL",
+    
     // staff action types
     get_all_staffs: "FETCH_ALL_STAFF",
     add_staff: "ADD_STAFF",

@@ -6,6 +6,7 @@ export default {
   resetPasswordVerification: "/reset-password-verification",
   dashboard: "/dashboard",
   subjects: "/subjects",
+  addSubject:"/subjects/add-subject",
   studentRegistration: "/student-registration",
   addStudent: "/student-registration/add-student",
   addStudentSubject: "/add-student-subject",

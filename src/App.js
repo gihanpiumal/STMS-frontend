@@ -11,6 +11,7 @@ import {
   Home,
   Dashboard,
   Subjects,
+  AddSubject,
   StaffRegistration,
   AddStaff,
   AddStudent,
@@ -64,6 +65,14 @@ const App = () => {
             element={
               <>
                 <Layout component={<Subjects />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.addSubject}
+            element={
+              <>
+                <Layout component={<AddSubject />} />
               </>
             }
           />

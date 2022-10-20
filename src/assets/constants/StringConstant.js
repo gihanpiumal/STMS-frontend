@@ -5,4 +5,14 @@ export default {
     Pending: "Pending",
     Deactive: "Deactive",
   },
+
+  days: [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
 };
