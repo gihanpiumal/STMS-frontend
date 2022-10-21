@@ -27,6 +27,7 @@ import ClassIcon from "@mui/icons-material/Class";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CategoryIcon from "@mui/icons-material/Category";
+import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 
 import "./layout.scss";
 import { RoutesConstant } from "../../assets/constants";
@@ -180,6 +181,17 @@ const Layout = (props) => {
                     <CategoryIcon style={{ color: "#2192FF" }} />
                   </ListItemIcon>
                   <ListItemText primary={"Categories"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+
+            <Link className="layout-links" to={RoutesConstant.halls}>
+              <ListItem key={"hall"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <MapsHomeWorkIcon style={{ color: "#2192FF" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={"Halls"} />
                 </ListItemButton>
               </ListItem>
             </Link>

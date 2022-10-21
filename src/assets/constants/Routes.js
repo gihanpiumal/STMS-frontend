@@ -21,4 +21,5 @@ export default {
   classes: "/classes",
   extraClasses: "/extra-classes",
   categories: "/categories",
+  halls: "/halls",
 };

@@ -26,6 +26,7 @@ import {
   Classes,
   ExtraClasses,
   Categories,
+  Halls
 } from "./pages";
 import { RoutesConstant } from "./assets/constants";
 import { Layout } from "./components";
@@ -185,6 +186,14 @@ const App = () => {
             element={
               <>
                 <Layout component={<Categories />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.halls}
+            element={
+              <>
+                <Layout component={<Halls />} />
               </>
             }
           />
