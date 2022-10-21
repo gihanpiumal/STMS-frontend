@@ -1,0 +1,95 @@
+.add-teacher {
+    padding: 10px;
+    .add-teacher-wrapper {
+      width: 100%;
+      .add-teacher-title {
+        font-size: 22px;
+        font-weight: 500;
+      }
+      .add-teacher-middle {
+        padding: 10px;
+        border: 1px solid #fff;
+        .add-teacher-data {
+          display: flex;
+          @media screen and (max-width: 600px) {
+            flex-direction: column;
+          }
+          .add-teacher-data-left {
+            flex: 1;
+            padding: 20px;
+            .add-teacher-data-entity {
+              display: flex;
+              // justify-content: center;
+              margin-bottom: 20px;
+  
+              .add-teacher-data-entity-lable {
+                flex: 1;
+                font-size: 16px;
+                font-weight: 500;
+              }
+  
+              .add-teacher-data-entity-lable-data {
+                flex: 4;
+                .add-teacher-data-entity-input {
+                  flex: 4;
+                  width: 100%;
+                }
+                .add-teacher-data-entity-select {
+                  width: 100%;
+                  @media screen and (max-width: 600px) {
+                    width: 100%;
+                  }
+                }
+                .input-error {
+                  color: rgb(167, 21, 21);
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+          .add-teacher-data-right {
+            flex: 1;
+            padding: 20px;
+            .add-teacher-data-entity {
+              display: flex;
+              justify-content: center;
+              margin-bottom: 20px;
+              .add-teacher-data-entity-lable {
+                flex: 1;
+                font-size: 16px;
+                font-weight: 500;
+              }
+              .add-teacher-data-entity-lable-data {
+                flex: 4;
+                .add-teacher-data-entity-input {
+                  flex: 4;
+                }
+                .add-teacher-data-entity-select {
+                  width: 100%;
+                  @media screen and (max-width: 600px) {
+                    width: 100%;
+                  }
+                }
+                .input-error {
+                  color: rgb(167, 21, 21);
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+        }
+        .add-teacher-buttons {
+          margin-top: 20px;
+          display: flex;
+          justify-content: end;
+          padding-right: 20px;
+          .save-btn {
+            margin-right: 20px;
+          }
+          .cancel-btn {
+          }
+        }
+      }
+    }
+  }
+  

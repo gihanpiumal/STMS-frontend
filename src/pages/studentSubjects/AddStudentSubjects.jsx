@@ -1,48 +1,77 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Joi from "joi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
+import jwt_decode from "jwt-decode";
 
 import {
   Input,
   Select,
-  DatePicker,
   message,
   Space,
   Table,
   Checkbox,
+  Modal,
+  Switch,
 } from "antd";
-import { EyeOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EyeOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import Button from "@mui/material/Button";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 import "./addstudentsubjects.scss";
 
-import { getStudents, addStudent } from "../../services/actions/studentAction";
-import { getStudentSubjects } from "../../services/actions/studentSubjectAction";
+import { addStudentPayment } from "../../services/actions/studentPaymentActions";
+import {
+  getStudentSubjects,
+  addStudentSubjects,
+  updateStudentSubjects,
+  deleteStudentSubjects,
+} from "../../services/actions/studentSubjectAction";
 import { getCategories } from "../../services/actions/categoriesAction";
 import { getSubjects } from "../../services/actions/subjectAction";
-import { RoutesConstant } from "../../assets/constants";
+import { RoutesConstant, StringConstant } from "../../assets/constants";
+import { SubjectViewModal } from "../../components";
+import { getAccessToken } from "../../config/LocalStorage";
+
+const accessArray = [
+  StringConstant.studentAccess.Active,
+  StringConstant.studentAccess.Deactive,
+];
 
 const AddStudentSubjects = () => {
-  const studentID = "634ba62244be98edeffd01fb";
-  const studentSubjectCategoryID = "634b6de49fbd3802993d7f5a";
+  const location = useLocation();
+  const studentID = new URLSearchParams(location.search).get("id");
+  const studentSubjectCategoryID = new URLSearchParams(location.search).get(
+    "cat-id"
+  );
   const [form, setForm] = useState({
     student_id: studentID,
     subject_id: "",
     enrollDate: moment().format("YYYY-MM-DD"),
     tempStopDate: "",
     admition: false,
-    studentAccess: "Active",
+    studentAccess: StringConstant.studentAccess.Active,
     reasonForStop: "",
   });
+  const [editForm, setEditForm] = useState({
+    tempStopDate: moment().format("YYYY-MM-DD"),
+    studentAccess: "",
+    reasonForStop: "",
+  });
+  const [subjectFees, setSubjectFees] = useState("");
   const [isAdmitionWant, setIsAdmitionWant] = useState(false);
   const [admitionValuue, setAdmitionValue] = useState("");
   const [displayButtons, setDisplayButtons] = useState(false);
   const [checkBoxEror, setCheckBoxError] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [documentId, setDocumentId] = useState("");
+  const [isShowModalOpen, setShowIsModalOpen] = useState(false);
+  const [recordDetails, setRecordDetails] = useState();
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
+  let dateObj = new Date();
 
   let studentSubjectObj = {
     student_id: studentID,
@@ -71,12 +100,18 @@ const AddStudentSubjects = () => {
   const handleChangeSubject = (value) => {
     setForm({ ...form, ["subject_id"]: value });
     subjectList.map((val) => {
-      if (val.isAdmition) {
-        setIsAdmitionWant(true);
-        setAdmitionValue(val.admition);
-      }
-      {
-        !form.admition && setDisplayButtons(true);
+      if (val._id == value) {
+        if (val.isAdmition) {
+          setIsAdmitionWant(true);
+          setAdmitionValue(val.admition);
+        } else {
+          setIsAdmitionWant(false);
+        }
+        console.log(val);
+        setSubjectFees(val.fees);
+        {
+          !form.admition && setDisplayButtons(true);
+        }
       }
     });
   };
@@ -86,29 +121,130 @@ const AddStudentSubjects = () => {
     setCheckBoxError(false);
   };
 
+  // modal controllers
+  const showEditModal = (record) => {
+    setEditForm({ ...editForm, ["studentAccess"]: record.studentAccess });
+    setDocumentId(record._id);
+    setIsEditModalOpen(true);
+  };
+
+  const showSubjectModal = (record) => {
+    setRecordDetails(record);
+    setShowIsModalOpen(true);
+  };
+
+  const showdeleteModal = (record) => {
+    setDocumentId(record._id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleChangAccess = (value) => {
+    setEditForm({ ...editForm, ["studentAccess"]: value });
+    if (value == StringConstant.studentAccess.Active) {
+      setEditForm({ ...editForm, ["tempStopDate"]: null });
+    }
+  };
+
+  const handleCancelEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleCancelDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleCancelShowModal = () => {
+    setShowIsModalOpen(false);
+  };
+
+  const handleEdit = async () => {
+    let data = await dispatch(updateStudentSubjects(documentId, editForm)); // save new student-subject data
+    if (data) {
+      handleCancelEditModal();
+      message.success({
+        content: "Subject Edited Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    handleCancelEditModal();
+  };
+
+  const handleDelete = async () => {
+    let data = await dispatch(deleteStudentSubjects(documentId)); // delete student-subject data
+    if (data) {
+      handleCancelDeleteModal();
+      message.success({
+        content: "Subject deleted Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+    }
+    handleCancelDeleteModal();
+  };
+
   const submit = async () => {
     if (isAdmitionWant && !form.admition) {
       setCheckBoxError(true);
       return;
     }
-    // if (validate()) {
-    //   return;
-    // }
 
+    let selectSubjectId = false;
     studentSubjectData.map((val) => {
       if (val.subject_id == form.subject_id) {
-        console.log("already exixit");
-        return;
+        selectSubjectId = true;
       }
     });
 
-    // let data = await dispatch(addStudent(form)); // save new student data
-    // if (data) {
-    //   message.success("Student added successfullly", 3);
-    //   goBack();
-    // }
+    if (selectSubjectId) {
+      message.error({
+        content: "Subject Already Added",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      return;
+    }
 
-    console.log(form);
+    let decodedToken = jwt_decode(getAccessToken());
+
+    let studentPaymentForm = {
+      student_id: form.student_id,
+      subject_id: form.subject_id,
+      staff_member_id: decodedToken._id,
+      year: dateObj.getUTCFullYear().toString(),
+      month: new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+        new Date()
+      ),
+      PaymentDate: "",
+      amount: subjectFees,
+      payment_state: false,
+    };
+    console.log(studentPaymentForm);
+
+    let data = await dispatch(addStudentSubjects(form)); // save new student-subject data
+    if (data) {
+      message.success({
+        content: "Subject Added Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+
+      let data = await dispatch(addStudentPayment(studentPaymentForm)); // save new student-subject data
+      setIsAdmitionWant(false);
+      setDisplayButtons(false);
+      setForm({ ...form, ["subject_id"]: "", ["admition"]: false });
+      // goBack();
+    }
+  };
+
+  const onCancel = () => {
+    setIsAdmitionWant(false);
+    setDisplayButtons(false);
+    setForm({ ...form, ["subject_id"]: "", ["admition"]: false });
   };
 
   const goBack = () => {
@@ -121,14 +257,18 @@ const AddStudentSubjects = () => {
   const showActions = (record) => {
     return (
       <Space size="middle">
-        <EyeOutlined
+        {/* <EyeOutlined
           className="action-icons"
-          // onClick={() => this.showEditModal(record)}
+          onClick={() => showSubjectModal(record)}
+        /> */}
+        <EditOutlined
+          className="action-icons"
+          onClick={() => showEditModal(record)}
         />
 
         <DeleteOutlined
-          className="action-icons delete-icon"
-          // onClick={() => this.showDeleteModal(record)}
+          className="action-icons"
+          onClick={() => showdeleteModal(record)}
         />
       </Space>
     );
@@ -153,38 +293,40 @@ const AddStudentSubjects = () => {
       title: "Enrall Date",
       dataIndex: "enrollDate",
       key: "enrollDate",
+      responsive: ["sm"],
       render: (date, record) => {
         return moment(date).format("YYYY-MM-DD");
       },
     },
     {
-      title: "Addmition",
+      title: "Admission",
       dataIndex: "admition",
       key: "admition",
       render: (data, record) => {
         let status = "";
         {
-          data == true ? (status = "Done") : (status = "Not Done");
+          data == true ? (status = "Done") : (status = "No need");
         }
         return status;
       },
-    },
-    {
-      title: "Student Access",
-      dataIndex: "studentAccess",
-      key: "studentAccess",
     },
     {
       title: "Tempory Stop Date",
       dataIndex: "tempStopDate",
       key: "tempStopDate",
       responsive: ["sm"],
+      render: (date, record) => {
+        if (date == null) {
+          return "";
+        } else {
+          return moment(date).format("YYYY-MM-DD");
+        }
+      },
     },
     {
-      title: "Reason For Stop",
-      dataIndex: "reasonForStop",
-      key: "reasonForStop",
-      responsive: ["sm"],
+      title: "Student Status",
+      dataIndex: "studentAccess",
+      key: "studentAccess",
     },
     {
       title: "Action",
@@ -197,20 +339,124 @@ const AddStudentSubjects = () => {
   return (
     <div className="add-student-subject">
       <div className="add-student-subject-wrapper">
+        <Modal
+          className="change-access-modal"
+          // title="Change Student Access"
+          open={isShowModalOpen}
+          onCancel={handleCancelShowModal}
+          footer={null}
+        >
+          <SubjectViewModal details={recordDetails} />
+        </Modal>
+        <Modal
+          className="change-access-modal"
+          title="Change Student Access"
+          open={isEditModalOpen}
+          onCancel={handleCancelEditModal}
+          footer={null}
+        >
+          <div
+            style={{ display: "flex", alignItems: "center" }}
+            className="change-access"
+          >
+            <p style={{ flex: 1 }}>Change Student Access</p>
+            <Select
+              value={editForm.studentAccess}
+              className="change-access-select"
+              style={{ flex: 2 }}
+              onChange={(value) => handleChangAccess(value)}
+            >
+              {accessArray.map((prop, index) => (
+                <Select.Option key={index} value={prop}>
+                  {prop}
+                </Select.Option>
+              ))}
+            </Select>
+          </div>
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            className="add-student-buttons"
+          >
+            <Button
+              style={{ marginRight: 20 }}
+              className="save-btn"
+              variant="contained"
+              onClick={handleEdit}
+            >
+              Save
+            </Button>
+            <Button
+              className="cancel-btn"
+              variant="contained"
+              onClick={handleCancelEditModal}
+            >
+              Cancel
+            </Button>
+          </div>
+        </Modal>
+
+        <Modal
+          className="change-access-modal"
+          open={isDeleteModalOpen}
+          onCancel={handleCancelDeleteModal}
+          footer={null}
+        >
+          <div style={{}} className="change-access">
+            <p style={{ fontSize: 18 }}>
+              Are you sure want to delete this subject??
+            </p>
+          </div>
+          <div
+            style={{
+              marginTop: 20,
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+            className="add-student-buttons"
+          >
+            <Button
+              style={{ marginRight: 20 }}
+              className="save-btn"
+              variant="contained"
+              onClick={handleDelete}
+            >
+              Yes
+            </Button>
+            <Button
+              className="cancel-btn"
+              variant="contained"
+              onClick={handleCancelDeleteModal}
+            >
+              No
+            </Button>
+          </div>
+        </Modal>
         <div className="add-student-subject-top">
           <div className="add-student-subject-top-select-box">
-            <div className="title">Add Subject</div>
-            <div className="select-box">
-              <Select
-                className="add-student-data-entity-select"
-                onChange={(value) => handleChangeSubject(value)}
-              >
-                {subjectList.map((prop, index) => (
-                  <Select.Option key={index} value={prop._id}>
-                    {prop.subject_name}
-                  </Select.Option>
-                ))}
-              </Select>
+            <div className="top-bar-line-left">
+              <div className="title">Add Subject</div>
+              <div className="select-box">
+                <Select
+                  value={form.subject_id}
+                  className="add-student-data-entity-select"
+                  onChange={(value) => handleChangeSubject(value)}
+                >
+                  {subjectList.map((prop, index) => (
+                    <Select.Option key={index} value={prop._id}>
+                      {prop.subject_name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+            </div>
+            <div className="top-bar-line-right">
+              <Button className="back-btn" variant="contained" onClick={goBack}>
+                Back
+              </Button>
             </div>
           </div>
           <div className="middle-middledata">
@@ -220,6 +466,7 @@ const AddStudentSubjects = () => {
                 <div className="admission-checkbox">
                   <Checkbox
                     className="admission-checkbox-value"
+                    defaultChecked={false}
                     onChange={(e) => {
                       setAdmission(e);
                     }}
@@ -246,7 +493,7 @@ const AddStudentSubjects = () => {
                 <Button
                   className="cancel-btn"
                   variant="contained"
-                  onClick={goBack}
+                  onClick={onCancel}
                 >
                   Cancel
                 </Button>

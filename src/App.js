@@ -11,17 +11,22 @@ import {
   Home,
   Dashboard,
   Subjects,
+  AddSubject,
   StaffRegistration,
+  AddStaff,
   AddStudent,
   AddStudentSubjects,
   StudentRegistration,
   TeacherRegistration,
+  AddTeacher,
   SttaffPayment,
   TeacherPayement,
   StudentPayment,
   OtherPayment,
   Classes,
   ExtraClasses,
+  Categories,
+  Halls
 } from "./pages";
 import { RoutesConstant } from "./assets/constants";
 import { Layout } from "./components";
@@ -65,6 +70,14 @@ const App = () => {
             }
           />
           <Route
+            path={RoutesConstant.addSubject}
+            element={
+              <>
+                <Layout component={<AddSubject />} />
+              </>
+            }
+          />
+          <Route
             path={RoutesConstant.studentRegistration}
             element={
               <>
@@ -97,10 +110,26 @@ const App = () => {
             }
           />
           <Route
+            path={RoutesConstant.addTeacher}
+            element={
+              <>
+                <Layout component={<AddTeacher />} />
+              </>
+            }
+          />
+          <Route
             path={RoutesConstant.staffRegistration}
             element={
               <>
                 <Layout component={<StaffRegistration />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.addStaff}
+            element={
+              <>
+                <Layout component={<AddStaff />} />
               </>
             }
           />
@@ -149,6 +178,22 @@ const App = () => {
             element={
               <>
                 <Layout component={<ExtraClasses />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.categories}
+            element={
+              <>
+                <Layout component={<Categories />} />
+              </>
+            }
+          />
+          <Route
+            path={RoutesConstant.halls}
+            element={
+              <>
+                <Layout component={<Halls />} />
               </>
             }
           />

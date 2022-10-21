@@ -4,7 +4,7 @@ import Joi from "joi";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
-import { Input, Select, DatePicker, message } from "antd";
+import { Input, Select, DatePicker, message, Modal } from "antd";
 import Button from "@mui/material/Button";
 
 import "./addstudent.scss";
@@ -49,9 +49,7 @@ const schema = Joi.object({
     .label("Email"),
   avatar: Joi.string().empty("").label("Profile Picture"),
   password: Joi.string().empty("").label("Password"),
-  subject_list: Joi.array()
-    .empty("")
-    .label("Subject id list"),
+  subject_list: Joi.array().empty("").label("Subject id list"),
   category_id: Joi.string().required().label("Category"),
   registeredDate: Joi.date().raw().required().label("Registered Date"),
   access_level: Joi.string().required().label("Access Level"),
@@ -81,8 +79,12 @@ const AddStudent = () => {
     OTPCode: 0,
   });
   const [errors, setErrors] = useState([]);
+  const [isNavigateModalOpen, setNavigateIsModalOpen] = useState(false);
   const [categoryId, setCattegoryId] = useState([]);
   const [subjectIdDataList, setSubjectIdDataList] = useState([]);
+  const [studentId, setStudentId] = useState("");
+  const [studentCategoryId, setStudentCategoryId] = useState("");
+
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
 
@@ -126,6 +128,16 @@ const AddStudent = () => {
 
   const handleChangeSubject = (value) => {
     setForm({ ...form, ["subject_list"]: value });
+  };
+
+  // modal controllers
+
+  const showNavigateModal = () => {
+    setNavigateIsModalOpen(true);
+  };
+
+  const handleCancelNavigateModal = () => {
+    setNavigateIsModalOpen(false);
   };
 
   // submit validation
@@ -179,8 +191,15 @@ const AddStudent = () => {
 
     let data = await dispatch(addStudent(form)); // save new student data
     if (data) {
-      message.success("Student added successfullly", 3);
-      goBack();
+      message.success({
+        content: "Student Added Successfully",
+        style: {
+          marginTop: "10vh",
+        },
+      });
+      setStudentId(data.details._id);
+      setStudentCategoryId(data.details.category_id);
+      showNavigateModal();
     }
     setErrors([]);
   };
@@ -192,9 +211,39 @@ const AddStudent = () => {
     });
   };
 
+  const addSubjects = () => {
+    navigate(
+      RoutesConstant.addStudentSubject + "?id=" + studentId +
+      "&cat-id=" +
+      studentCategoryId,
+      {
+        // navigate to add student subject page
+        replace: true,
+      }
+    );
+  };
+
   return (
     <div className="add-student">
       <div className="add-student-wrapper">
+        <Modal
+          title="Do you want add subjects now ??"
+          open={isNavigateModalOpen}
+          onCancel={handleCancelNavigateModal}
+          footer={null}
+        >
+          <Button
+            style={{ marginRight: 20 }}
+            className="yes-btn"
+            variant="contained"
+            onClick={addSubjects}
+          >
+            Yes
+          </Button>
+          <Button className="skip-btn" variant="contained" onClick={goBack}>
+            Skip now
+          </Button>
+        </Modal>
         <div className="add-student-title">Add Student</div>
         <div className="add-student-middle">
           <div className="add-student-data">
@@ -258,21 +307,6 @@ const AddStudent = () => {
                   <p className="input-error">{errors.DOB ? errors.DOB : ""}</p>
                 </div>
               </div>
-              {/* <div className="add-student-data-entity">
-                <div className="add-student-data-entity-lable">Subjects</div>
-                <Select
-                  className="add-student-data-entity-select"
-                  mode="multiple"
-                  onChange={(value) => handleChangeSubject(value)}
-                >
-                  {subjectIdDataList.map((prop, index) => (
-                    <Select.Option key={index} value={prop.subject_id}>
-                      {prop.subject_name}
-                    </Select.Option>
-                  ))}
-                </Select>
-                <p className="input-error">{errors.NIC ? errors.NIC : ""}</p>
-              </div> */}
             </div>
             <div className="add-student-data-right">
               <div className="add-student-data-entity">

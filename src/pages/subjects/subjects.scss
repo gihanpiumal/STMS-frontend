@@ -1,0 +1,127 @@
+.subject-reg {
+    padding: 10px;
+    .subject-reg-wrapper {
+      width: 100%;
+      .subject-reg-top {
+        padding: 10px;
+        // border: 1px solid #fff;
+        border: 1px solid black;
+        .subject-reg-top-search {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .subject-add-Icon {
+            font-size: 40px;
+            cursor: pointer;
+            :hover {
+              color: #270082;
+            }
+          }
+          .subject-search-input {
+          }
+          .subject-search-Icon {
+            font-size: 40px;
+            cursor: pointer;
+            :hover {
+              color: #270082;
+            }
+          }
+          .subject-filter-Icon {
+            font-size: 40px;
+            cursor: pointer;
+            :hover {
+              color: #270082;
+            }
+          }
+        }
+        .subject-reg-top-filter {
+          margin-top: 20px;
+          border: 1px solid #fff;
+          padding: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          // padding-left: 20%;
+          @media screen and (max-width: 600px) {
+            flex-direction: column;
+          }
+          .subject-reg-top-filter-email {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              margin-bottom: 10px;
+            }
+            .email-lablle {
+              font-size: 18px;
+              margin-right: 10px;
+            }
+            .email-input {
+              width: 50%;
+              @media screen and (max-width: 600px) {
+                width: 100%;
+              }
+            }
+          }
+          .subject-reg-top-filter-status {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              margin-bottom: 20px;
+            }
+            .status-lablle {
+              font-size: 18px;
+              margin-right: 10px;
+              @media screen and (max-width: 600px) {
+                margin-right: 4px;
+              }
+            }
+            .status-input {
+              width: 50%;
+              @media screen and (max-width: 600px) {
+                width: 100%;
+              }
+            }
+          }
+          .subject-reg-top-filter-buttons {
+            // flex: 1;
+            display: flex;
+            align-items: center;
+            @media screen and (max-width: 600px) {
+              width: 100%;
+              margin-bottom: 10px;
+              align-items: flex-end;
+              margin-left: 85%;
+            }
+            .filter-btn {
+              margin-right: 20px;
+            }
+            .cancel-btn {
+            }
+          }
+        }
+        .subject-reg-top-filterblock {
+          display: none;
+        }
+      }
+      .subject-reg-middle {
+        margin-top: 30px;
+        padding: 10px;
+        border: 1px solid #fff;
+        width: 100%;
+        .subject-tbl-title {
+          font-size: 28px;
+          font-weight: 600;
+        }
+        .subject-registration-tbl {
+          width: 100%;
+        }
+      }
+      .subject-reg-bottom {
+      }
+    }
+  }
+  

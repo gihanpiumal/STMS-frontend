@@ -26,6 +26,8 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import ClassIcon from "@mui/icons-material/Class";
 import ColorizeIcon from "@mui/icons-material/Colorize";
 import LogoutIcon from "@mui/icons-material/Logout";
+import CategoryIcon from "@mui/icons-material/Category";
+import MapsHomeWorkIcon from "@mui/icons-material/MapsHomeWork";
 
 import "./layout.scss";
 import { RoutesConstant } from "../../assets/constants";
@@ -89,7 +91,7 @@ const Layout = (props) => {
           </Toolbar>
         </AppBar>
         <Drawer
-        className="drawer"
+          className="drawer"
           width={drawerWidth}
           sx={{
             width: drawerWidth,
@@ -172,6 +174,28 @@ const Layout = (props) => {
               </Link>
             </Collapse>
 
+            <Link className="layout-links" to={RoutesConstant.categories}>
+              <ListItem key={"categories"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CategoryIcon style={{ color: "#2192FF" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={"Categories"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+
+            <Link className="layout-links" to={RoutesConstant.halls}>
+              <ListItem key={"hall"} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <MapsHomeWorkIcon style={{ color: "#2192FF" }} />
+                  </ListItemIcon>
+                  <ListItemText primary={"Halls"} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
+
             <Link className="layout-links" to={RoutesConstant.subjects}>
               <ListItem key={"Subjects"} disablePadding>
                 <ListItemButton>
@@ -233,7 +257,7 @@ const Layout = (props) => {
               </Link>
             </Collapse>
 
-            <Link className="layout-links" to={RoutesConstant.classes}>
+            {/* <Link className="layout-links" to={RoutesConstant.classes}>
               <ListItem key={"Classes"} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -242,7 +266,7 @@ const Layout = (props) => {
                   <ListItemText primary={"Classes"} />
                 </ListItemButton>
               </ListItem>
-            </Link>
+            </Link> */}
 
             <Link className="layout-links" to={RoutesConstant.extraClasses}>
               <ListItem key={"extra-class"} disablePadding>
@@ -258,7 +282,7 @@ const Layout = (props) => {
           <div className="layout-logout">
             <List>
               <Link className="layout-links" to={RoutesConstant.login}>
-                <ListItem key={"Subjects"} disablePadding>
+                <ListItem key={"logout"} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>
                       <LogoutIcon />
