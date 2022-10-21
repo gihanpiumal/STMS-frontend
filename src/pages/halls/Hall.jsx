@@ -27,11 +27,10 @@ import {
 // schema for validatioon
 
 const schema = Joi.object({
-    hall_name: Joi.string().required().label("Hall Name"),
+  hall_name: Joi.string().required().label("Hall Name"),
 });
 
 const Hall = () => {
-    
   // states difine
   const [form, setForm] = useState({
     hall_name: "",
@@ -178,7 +177,6 @@ const Hall = () => {
   const showActions = (record) => {
     return (
       <Space size="middle">
-
         <EditOutlined
           className="action-icons"
           onClick={() => showEditModal(record)}
@@ -373,7 +371,8 @@ const Hall = () => {
         </div>
         <div className="hall-reg-bottom"></div>
       </div>
-    </div>)
+    </div>
+  );
 };
 
 export default Hall;

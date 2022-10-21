@@ -7,6 +7,7 @@ import studentSubjects from "./studentSubjectReducer";
 import teachers from "./teacherReducers";
 import staffs from "./staffReducers";
 import halls from "./hallReducers";
+import extraClasses from "./extraClassesReducers";
 
 export default combineReducers({
   STUDENTS: students,
@@ -16,4 +17,5 @@ export default combineReducers({
   TEACHERS: teachers,
   STAFFS: staffs,
   HALLS: halls,
+  EXTRA_CLASSES: extraClasses,
 });

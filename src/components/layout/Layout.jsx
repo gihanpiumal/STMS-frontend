@@ -257,7 +257,7 @@ const Layout = (props) => {
               </Link>
             </Collapse>
 
-            <Link className="layout-links" to={RoutesConstant.classes}>
+            {/* <Link className="layout-links" to={RoutesConstant.classes}>
               <ListItem key={"Classes"} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -266,7 +266,7 @@ const Layout = (props) => {
                   <ListItemText primary={"Classes"} />
                 </ListItemButton>
               </ListItem>
-            </Link>
+            </Link> */}
 
             <Link className="layout-links" to={RoutesConstant.extraClasses}>
               <ListItem key={"extra-class"} disablePadding>
