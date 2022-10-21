@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Joi from "joi";
 import { useLocation, useNavigate } from "react-router-dom";
 import moment from "moment";
+import jwt_decode from "jwt-decode";
 
 import {
   Input,
@@ -20,7 +21,7 @@ import Alert from "@mui/material/Alert";
 
 import "./addstudentsubjects.scss";
 
-import { getStudents, addStudent } from "../../services/actions/studentAction";
+import { addStudentPayment } from "../../services/actions/studentPaymentActions";
 import {
   getStudentSubjects,
   addStudentSubjects,
@@ -31,6 +32,7 @@ import { getCategories } from "../../services/actions/categoriesAction";
 import { getSubjects } from "../../services/actions/subjectAction";
 import { RoutesConstant, StringConstant } from "../../assets/constants";
 import { SubjectViewModal } from "../../components";
+import { getAccessToken } from "../../config/LocalStorage";
 
 const accessArray = [
   StringConstant.studentAccess.Active,
@@ -57,6 +59,7 @@ const AddStudentSubjects = () => {
     studentAccess: "",
     reasonForStop: "",
   });
+  const [subjectFees, setSubjectFees] = useState("");
   const [isAdmitionWant, setIsAdmitionWant] = useState(false);
   const [admitionValuue, setAdmitionValue] = useState("");
   const [displayButtons, setDisplayButtons] = useState(false);
@@ -68,6 +71,7 @@ const AddStudentSubjects = () => {
   const [recordDetails, setRecordDetails] = useState();
   const dispatch = useDispatch();
   let navigate = useNavigate(); // use to navigate between links
+  let dateObj = new Date();
 
   let studentSubjectObj = {
     student_id: studentID,
@@ -103,6 +107,8 @@ const AddStudentSubjects = () => {
         } else {
           setIsAdmitionWant(false);
         }
+        console.log(val);
+        setSubjectFees(val.fees);
         {
           !form.admition && setDisplayButtons(true);
         }
@@ -202,6 +208,22 @@ const AddStudentSubjects = () => {
       return;
     }
 
+    let decodedToken = jwt_decode(getAccessToken());
+
+    let studentPaymentForm = {
+      student_id: form.student_id,
+      subject_id: form.subject_id,
+      staff_member_id: decodedToken._id,
+      year: dateObj.getUTCFullYear().toString(),
+      month: new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+        new Date()
+      ),
+      PaymentDate: "",
+      amount: subjectFees,
+      payment_state: false,
+    };
+    console.log(studentPaymentForm);
+
     let data = await dispatch(addStudentSubjects(form)); // save new student-subject data
     if (data) {
       message.success({
@@ -211,6 +233,7 @@ const AddStudentSubjects = () => {
         },
       });
 
+      let data = await dispatch(addStudentPayment(studentPaymentForm)); // save new student-subject data
       setIsAdmitionWant(false);
       setDisplayButtons(false);
       setForm({ ...form, ["subject_id"]: "", ["admition"]: false });

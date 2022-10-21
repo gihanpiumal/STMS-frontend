@@ -5,6 +5,12 @@ export default {
   update_student: "UPDATE_STUDENT",
   delete_student: "DELETE_STUDENT",
 
+  // studentPayment action types
+  get_all_student_payments: "FETCH_ALL_STUDENT_PAYMENTS",
+  add_student_payment: "ADD_STUDENT_PAYMENT",
+  update_student_payment: "UPDATE_STUDENT_PAYMENT",
+  delete_student_payment: "DELETE_STUDENT_PAYMENT",
+
   // subject action types
   get_all_subjects: "FETCH_ALL_SUBJECTS",
   add_subject: "ADD_SUBJECT",
