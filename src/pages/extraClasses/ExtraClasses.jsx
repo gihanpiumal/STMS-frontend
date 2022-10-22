@@ -131,6 +131,7 @@ const ExtraClasses = () => {
       });
     }
     setEditModal(false);
+    dispatch(getExtraClasses(searchObj)); // load extra class request data to redux store
   };
 
   const showActions = (record) => {

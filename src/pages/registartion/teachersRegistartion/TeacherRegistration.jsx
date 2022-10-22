@@ -129,6 +129,7 @@ const TeacherRegistration = () => {
       });
     }
     setEditModal(false);
+    dispatch(getTeachers(searchObj)); // load user data to redux store
   };
 
   const showActions = (record) => {
@@ -291,7 +292,7 @@ const TeacherRegistration = () => {
           </div>
         </div>
         <div className="teacher-reg-middle">
-          <div className="teacher-tbl-title">Student Table</div>
+          <div className="teacher-tbl-title">Teachers Table</div>
           <Table
             className="teacher-registration-tbl"
             columns={columns}

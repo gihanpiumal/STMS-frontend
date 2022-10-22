@@ -141,6 +141,7 @@ const Subjects = () => {
       });
     }
     setEditModal(false);
+    dispatch(getSubjects(searchObj)); // load subject data to redux store
   };
 
   const showActions = (record) => {

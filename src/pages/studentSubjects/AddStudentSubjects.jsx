@@ -139,6 +139,7 @@ const AddStudentSubjects = () => {
   };
 
   const handleChangAccess = (value) => {
+    console.log(value);
     setEditForm({ ...editForm, ["studentAccess"]: value });
     if (value == StringConstant.studentAccess.Active) {
       setEditForm({ ...editForm, ["tempStopDate"]: null });
@@ -158,6 +159,7 @@ const AddStudentSubjects = () => {
   };
 
   const handleEdit = async () => {
+    console.log(editForm);
     let data = await dispatch(updateStudentSubjects(documentId, editForm)); // save new student-subject data
     if (data) {
       handleCancelEditModal();

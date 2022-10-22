@@ -172,6 +172,7 @@ const Hall = () => {
       });
     }
     setEditModal(false);
+    dispatch(getHalls(searchObj)); // load hall data to redux store
   };
 
   const showActions = (record) => {

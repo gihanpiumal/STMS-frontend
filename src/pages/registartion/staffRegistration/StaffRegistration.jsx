@@ -126,6 +126,7 @@ const StaffRegistration = () => {
       });
     }
     setEditModal(false);
+    dispatch(getStaffs(searchObj)); // load user data to redux store
   };
 
   const showActions = (record) => {

@@ -139,6 +139,7 @@ const StudentRegistration = () => {
       });
     }
     setEditModal(false);
+    dispatch(getStudents(searchObj)); // load user data to redux store
   };
 
   const showActions = (record) => {

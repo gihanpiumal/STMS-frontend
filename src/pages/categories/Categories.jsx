@@ -182,6 +182,7 @@ const Categories = () => {
       });
     }
     setEditModal(false);
+    dispatch(getCategories(searchObj)); // load user data to redux store
   };
 
   const showActions = (record) => {
