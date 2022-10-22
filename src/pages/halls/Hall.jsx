@@ -341,7 +341,7 @@ const Hall = () => {
                 {errors.hall_name ? errors.hall_name : ""}
               </p>
             </div>
-            <div className="hall_name-reg-top-filter-buttons">
+            <div className="hall-reg-top-filter-buttons">
               <Button
                 className="filter-btn"
                 variant="contained"

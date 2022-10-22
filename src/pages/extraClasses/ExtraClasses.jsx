@@ -117,6 +117,7 @@ const ExtraClasses = () => {
       });
     }
     setAddModalOpen(false);
+    dispatch(getExtraClasses(searchObj)); // load extra class request data to redux store
   };
 
   const editSubmit = async (editForm) => {

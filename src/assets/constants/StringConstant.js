@@ -15,4 +15,25 @@ export default {
     "Friday",
     "Saturday",
   ],
+
+  years: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+  months: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "Augest",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
+
+  payment_state: [
+    { value: true, lable: "Done" },
+    { value: false, lable: "Pending" },
+  ],
 };
