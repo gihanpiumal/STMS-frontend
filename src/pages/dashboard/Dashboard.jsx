@@ -115,7 +115,6 @@ const Dashboard = () => {
       title: "Request Status",
       dataIndex: "requestStatus",
       key: "requestStatus",
-      responsive: ["sm"],
     },
   ];
 
@@ -195,10 +194,23 @@ const Dashboard = () => {
       key: "subject_name",
     },
     {
+      title: "Teacher Name",
+      dataIndex: "teacher_details",
+      key: "teacher_details",
+      render: (data, record) => {
+        if (!data) {
+          return "";
+        } else {
+          return data.map((val, index) => {
+            return val.first_name + " " + val.last_name;
+          });
+        }
+      },
+    },
+    {
       title: "Hall Name",
       dataIndex: "hall_details",
       key: "hall_details",
-      responsive: ["sm"],
       render: (data, record) => {
         if (!data) {
           return "";
@@ -213,13 +225,11 @@ const Dashboard = () => {
       title: "Start Time",
       dataIndex: "startTime",
       key: "startTime",
-      responsive: ["sm"],
     },
     {
       title: "End Time",
       dataIndex: "endTime",
       key: "endTime",
-      responsive: ["sm"],
     },
   ];
 
